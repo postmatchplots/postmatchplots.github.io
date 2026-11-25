@@ -1,63 +1,57 @@
 # Post-Match Plots
 
-Football, drawn with data. A static site for GitHub Pages: no build step, just HTML, CSS, a small charts script and bundled fonts.
+Football, drawn with data. Live at https://postmatchplots.github.io
 
-## Structure
-Everything sits in the top level of the repository (no folders):
-- `index.html`: homepage
+A static site on GitHub Pages: plain HTML, CSS, a small charts script and self-hosted fonts. No build step, no trackers, no cookies.
+
+## What's here
+
+**Pages**
+- `index.html`: the homepage. The post list between `<!-- posts:start -->` and `<!-- posts:end -->` is filled in automatically.
 - `united-*.html`, `bruno-fernandes-decline.html`: the "United at 11 games" series. New posts are more HTML files alongside them.
-- `site.css`: all styling, including the font setup
-- `charts.js`: chart helpers (pitch, scatter, bar rows, diverging bars, dumbbells)
-- `logo.svg`: the Four-pass P logo, also the browser-tab icon
-- `feed.xml`, `sitemap.xml`: RSS feed and search-engine page list. Generated automatically, don't edit by hand.
+- `404.html`: the "page not found" page.
+
+**Look and feel**
+- `site.css`: all the styling, including the font setup.
+- `charts.js`: chart helpers (`PMP.pitch`, `PMP.scatter`, `PMP.rows`, `PMP.diverge`, `PMP.dumbbell`).
+- `logo.svg`: the logo, also the browser-tab icon. `apple-touch-icon.png` is the iPhone home-screen version.
+- `barlow-*.woff2`, `OFL.txt`: the fonts and their licence, hosted here so visitors' browsers never contact Google Fonts.
+- `social/`: the 1200x630 preview images shown when a page is shared, one per page, named after it.
+
+**Generated automatically (don't edit by hand)**
+- `feed.xml`: the RSS feed.
+- `sitemap.xml`: the page list for search engines.
+- The homepage post list.
+
+`scripts/update_site.py` rebuilds all three on every push, run by `.github/workflows/update-site.yml`. It reads each post's `<head>` tags, so those tags are what matter.
+
+**Leave alone**
+- `google521f82c2bf5ada73.html`: Google Search Console verification. Delete it and Search Console stops working.
 - `robots.txt`: points search engines at the sitemap.
-- `scripts/update_site.py` and `.github/workflows/update-site.yml`: the automation that rebuilds the feed, sitemap and homepage post list on every upload.
-- `social/`: the preview images shown when a page is shared (1200x630), one per page.
-- `barlow-*.woff2`, `OFL.txt`: the fonts and their licence, hosted here so visitors' browsers don't contact Google Fonts
 
-## Going live
+**Scripts**
+- `scripts/build_united_series.py`: regenerates the six series pages. Their words and data live in this file, so edit there rather than in the HTML.
+- `scripts/make_social_cards.py`: makes the preview images. Needs Python with playwright (`pip install playwright && playwright install chromium`). Run it on your own machine.
 
-### 1. Set up and lock down the account
-1. Sign up at github.com. The username becomes the web address, so `postmatchplots` gives `postmatchplots.github.io`.
-2. Turn on two-factor authentication: Settings > Password and authentication > Enable two-factor authentication. Use an authenticator app rather than SMS, and save the recovery codes somewhere safe.
-3. Hide your email: Settings > Emails > tick "Keep my email addresses private". Also tick "Block command line pushes that expose my email".
+## Adding a post
 
-### 2. Create the repository
-1. Click + (top right) > New repository.
-2. Name it exactly `yourusername.github.io`, set it to Public, leave README, .gitignore and licence unticked.
-3. Click Create repository.
+1. Copy an existing post page and rename it: lowercase, hyphens, ending `.html`.
+2. Change the words and the data arrays in the script at the bottom.
+3. Update these `<head>` tags:
+   - `og:title` and `og:description`
+   - `article:published_time`, the date, like `2026-12-02`
+   - `pmp:summary`, the one-line answer shown on the homepage
+   - `pmp:series` and `pmp:part` if it's part of a series (delete both if not)
+   - the canonical link, `og:url`, `og:image` and the structured-data block, all pointing at the new file name
+4. Add a line for the page to the list at the top of `scripts/make_social_cards.py`, run it, and check the new image in `social/`.
+5. Push (or Add file > Upload files). Within a couple of minutes the homepage list, feed and sitemap update themselves. The Actions tab shows a green tick when it's done.
 
-### 3. Upload the site
-1. Unzip `postmatchplots.zip`. Upload the contents of the `postmatchplots` folder, not the folder itself.
-2. On the repository page click "uploading an existing file", then select every file and drag them in.
-3. Check the list includes `index.html`, `site.css`, `charts.js`, `logo.svg`, the four `.woff2` fonts, `OFL.txt` and the post file. Click Commit changes.
+## House rules
 
-### 4. Switch on Pages and HTTPS
-1. Settings > Pages. Under Build and deployment, set Source to "Deploy from a branch", branch `main`, folder `/ (root)`, Save.
-2. Once the site has built, tick "Enforce HTTPS" on the same page (it can take a few minutes to become available).
-3. Visit `https://yourusername.github.io`. The Actions tab shows a green tick when it's published.
-
-## Updating
-Add file > Upload files, and drop in the changed files. A file with the same name replaces the old one. The site updates within a minute or two.
-
-To add a post:
-1. Copy an existing post page and rename it (lowercase, hyphens, ending `.html`).
-2. Change the words, the data arrays in the script at the bottom, and these tags in the `<head>`: `og:title`, `og:description`, `article:published_time` (the date, like 2026-12-02), `pmp:summary` (the one-line answer for the homepage), and `pmp:series` and `pmp:part` if it's part of a series (delete both if not). Also update the canonical, `og:url`, `og:image` and the structured-data block to the new file name.
-3. Add a 1200x630 preview image to `social/` with the same name as the page.
-4. Upload. Within a minute or two the homepage list, RSS feed and sitemap update themselves. Check the Actions tab for a green tick.
-
-## Rules for what goes in the repo
-- The repo and its whole history are public. Deleting a file later doesn't remove it from history.
-- Never upload passwords, API keys, or raw data exports. Charts only.
-- Keep personal details light: no employer, home town or family.
-- Credit "Data: FotMob / Opta" on every post. No club badges or player photos.
-- If you add visitor stats, use a cookie-free service (GoatCounter or Plausible) so no cookie banner is needed.
-
-## Moving to your own domain later
-1. Buy the domain and turn on WHOIS privacy at the registrar.
-2. Verify it first: GitHub Settings (your account, not the repo) > Pages > Add a domain. This stops anyone else claiming it on GitHub.
-3. Add the DNS records GitHub's docs list for an apex domain (four A records) and/or a CNAME for `www`.
-4. Repo Settings > Pages > Custom domain: enter it, Save, then tick Enforce HTTPS once it's offered.
-5. Old `github.io` links redirect automatically. Don't let the domain lapse while it still points at GitHub.
+- Everything here, history included, is public. Deleting a file later doesn't remove it from history.
+- No passwords, API keys or raw data exports. Charts only.
+- Keep personal details out.
+- Credit "Data: FotMob / Opta" on every chart. No club badges or player photos.
+- Visitor stats, if ever added, must be cookie-free (GoatCounter or Plausible), so there's no cookie banner.
 
 Data: FotMob / Opta.
