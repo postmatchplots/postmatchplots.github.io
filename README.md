@@ -5,10 +5,14 @@ Football, drawn with data. A static site for GitHub Pages: no build step, just H
 ## Structure
 Everything sits in the top level of the repository (no folders):
 - `index.html`: homepage
-- `united-shoot-more-than-anyone.html`: the first post. New posts are more HTML files alongside it.
+- `united-*.html`, `bruno-fernandes-decline.html`: the "United at 11 games" series. New posts are more HTML files alongside them.
 - `site.css`: all styling, including the font setup
 - `charts.js`: chart helpers (pitch, scatter, bar rows, diverging bars, dumbbells)
 - `logo.svg`: the Four-pass P logo, also the browser-tab icon
+- `feed.xml`, `sitemap.xml`: RSS feed and search-engine page list. Generated automatically, don't edit by hand.
+- `robots.txt`: points search engines at the sitemap.
+- `scripts/update_site.py` and `.github/workflows/update-site.yml`: the automation that rebuilds the feed, sitemap and homepage post list on every upload.
+- `social/`: the preview images shown when a page is shared (1200x630), one per page.
 - `barlow-*.woff2`, `OFL.txt`: the fonts and their licence, hosted here so visitors' browsers don't contact Google Fonts
 
 ## Going live
@@ -36,7 +40,11 @@ Everything sits in the top level of the repository (no folders):
 ## Updating
 Add file > Upload files, and drop in the changed files. A file with the same name replaces the old one. The site updates within a minute or two.
 
-To add a post: copy `united-shoot-more-than-anyone.html`, rename it, swap the words and the data arrays in the script at the bottom, and add a card for it in the Posts section of `index.html`.
+To add a post:
+1. Copy an existing post page and rename it (lowercase, hyphens, ending `.html`).
+2. Change the words, the data arrays in the script at the bottom, and these tags in the `<head>`: `og:title`, `og:description`, `article:published_time` (the date, like 2026-12-02), `pmp:summary` (the one-line answer for the homepage), and `pmp:series` and `pmp:part` if it's part of a series (delete both if not). Also update the canonical, `og:url`, `og:image` and the structured-data block to the new file name.
+3. Add a 1200x630 preview image to `social/` with the same name as the page.
+4. Upload. Within a minute or two the homepage list, RSS feed and sitemap update themselves. Check the Actions tab for a green tick.
 
 ## Rules for what goes in the repo
 - The repo and its whole history are public. Deleting a file later doesn't remove it from history.

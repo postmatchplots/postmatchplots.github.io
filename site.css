@@ -45,7 +45,7 @@ nav a:hover,nav a[aria-current]{color:var(--ink)}
 .fig>svg{position:absolute;inset:0;width:100%;height:100%}
 .fig.tall{min-height:440px}
 .chart{margin:28px 0 8px}
-.chart .cap{font-size:14px;color:var(--mute);margin-top:8px}
+.cap{font-size:14px;color:var(--mute);margin-top:8px}
 svg text{fill:var(--ink);font-family:Barlow,sans-serif;font-size:14px;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
 svg .tick{fill:var(--mute);font-size:13px}
 svg .ann{fill:var(--ink);font-size:14px}
@@ -86,3 +86,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .row.axis{font-size:13px;color:var(--mute)}
 .row.axis .track span{position:absolute;transform:translateX(-50%)}
 @media(max-width:600px){.row.db{grid-template-columns:6.8em minmax(0,1fr) 4.6em}}
+.series{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin-top:14px}
+.series .card{padding:16px}
+.series .card[aria-current]{border-color:var(--red)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:clamp(16px,3vw,40px);margin-top:16px}
+.how>div{border-top:2px solid var(--red);padding-top:14px}
+.how p{margin:0}
+.list{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--rule)}
+.list li{border-bottom:1px solid var(--rule)}
+.list a{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:6px 24px;align-items:baseline;padding:16px 4px;text-decoration:none}
+.list a:hover .q{text-decoration:underline;text-decoration-color:var(--red)}
+.list .q{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:22px;line-height:1.15}
+.list .a{color:var(--mute)}
+@media(max-width:600px){.list a{grid-template-columns:minmax(0,1fr)}}

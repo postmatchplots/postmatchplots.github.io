@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Post-Match Plots</title>
+  <link>https://postmatchplots.github.io/</link>
+  <atom:link href="https://postmatchplots.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>Football, drawn with data. One question at a time, answered with charts.</description>
+  <language>en-gb</language>
+  <lastBuildDate>Wed, 25 Nov 2026 12:00:00 +0000</lastBuildDate>
+  <item>
+    <title>So where should United actually be?</title>
+    <link>https://postmatchplots.github.io/united-expected-points.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/united-expected-points.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Replay every match from the quality of its chances and Manchester United should have 13 points, not 8. Here&#x27;s where the points went, and why it only gets them to 15th.</description>
+  </item>
+  <item>
+    <title>Is Bruno Fernandes getting worse?</title>
+    <link>https://postmatchplots.github.io/bruno-fernandes-decline.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/bruno-fernandes-decline.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Bruno Fernandes is creating far fewer chances than last season and shooting more. Here&#x27;s how much is decline and how much was a freak season.</description>
+  </item>
+  <item>
+    <title>How much are set pieces costing United?</title>
+    <link>https://postmatchplots.github.io/united-set-pieces.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/united-set-pieces.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Manchester United have the worst set-piece record in the Premier League: one scored, seven conceded. Here&#x27;s what it&#x27;s costing them.</description>
+  </item>
+  <item>
+    <title>Why do United concede so many goals from so few shots?</title>
+    <link>https://postmatchplots.github.io/united-chances-conceded.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/united-chances-conceded.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Manchester United face an average number of shots but concede the best chances in the Premier League. Here&#x27;s where they come from.</description>
+  </item>
+  <item>
+    <title>Are United unlucky in front of goal?</title>
+    <link>https://postmatchplots.github.io/united-finishing-luck.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/united-finishing-luck.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Manchester United have scored about four goals fewer than their xG. Here&#x27;s whether that&#x27;s bad luck or bad finishing.</description>
+  </item>
+  <item>
+    <title>Why don&#x27;t United&#x27;s 203 shots add up to more?</title>
+    <link>https://postmatchplots.github.io/united-shot-quality.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/united-shot-quality.html</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+    <description>United take more shots than anyone in the Premier League. Nearly half come from outside the box, and the average one is worth less than any other team&#x27;s.</description>
+  </item>
+</channel>
+</rss>

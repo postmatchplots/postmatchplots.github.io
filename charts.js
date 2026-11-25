@@ -103,12 +103,14 @@ window.PMP = (() => {
     });
   }
 
-  /* Dumbbell rows: last season (hollow) to this season (filled), percentiles 0-100 */
+  /* Dumbbell rows: a (hollow) to b (filled). Percentiles by default; pass max, fmt and hi for other scales */
   function dumbbell(el, d) {
+    const max = d.max ?? 100, f = d.fmt || (v => v), fa = d.fmtA || f, pc = v => v / max * 100;
     el.innerHTML = d.rows.map(r => {
-      const lo = Math.min(r.a, r.b), hi = Math.max(r.a, r.b), drop = r.b < r.a - 10, col = drop ? RED : '#c9d4cd';
-      return `<div class="row db"><span>${esc(r.n)}</span><div class="track"><div class="seg" style="left:${lo}%;width:${hi - lo}%;background:${col}"></div><i class="a" style="left:${r.a}%"></i><i class="b" style="left:${r.b}%;background:${col}"></i></div><span class="v">${r.a}<span class="mute"> to </span>${r.b}</span></div>`;
-    }).join('') + `<div class="row db axis"><span></span><div class="track" style="background:none;height:auto"><span style="left:0">0</span><span style="left:50%">50</span><span style="left:100%">100</span></div><span></span></div>`;
+      const lo = Math.min(r.a, r.b), hi = Math.max(r.a, r.b);
+      const red = d.hi ? r.u : r.b < r.a - 10, col = red ? RED : '#c9d4cd';
+      return `<div class="row db${r.u ? ' u' : ''}"><span>${esc(r.n)}</span><div class="track"><div class="seg" style="left:${pc(lo)}%;width:${pc(hi - lo)}%;background:${col}"></div><i class="a" style="left:${pc(r.a)}%"></i><i class="b" style="left:${pc(r.b)}%;background:${col}"></i></div><span class="v">${esc(fa(r.a))}<span class="mute"> to </span>${esc(f(r.b))}</span></div>`;
+    }).join('') + `<div class="row db axis"><span></span><div class="track" style="background:none;height:auto">${(d.ticks || [0, 50, 100]).map(t => `<span style="left:${pc(t)}%">${t}</span>`).join('')}</div><span></span></div>`;
   }
 
   return {pitch, scatter, rows, diverge, slope, dumbbell};
