@@ -4,10 +4,10 @@
    COLOUR  night ground #0b0f0d, pitch #10291c, floodlight white ink, United red #e3343a for the point, grey for everyone else
    TYPE    Barlow Condensed 700 (stand signage) + Barlow
    LAYOUT  laptop: title across the top, picture large beneath with the scoreline beside it; phone: title, picture, figures */
-@font-face{font-family:Barlow;font-style:normal;font-weight:400;font-display:swap;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:Barlow;font-style:normal;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:Barlow;font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-style:normal;font-weight:400;font-display:swap;src:url(barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-style:normal;font-weight:500;font-display:swap;src:url(barlow-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-style:normal;font-weight:600;font-display:swap;src:url(barlow-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(barlow-condensed-latin-700-normal.woff2) format("woff2")}
 :root{color-scheme:dark;--bg:#0b0f0d;--panel:#121a16;--pitch:#10291c;--pitch2:#0d2318;--line:rgba(238,242,238,.55);--rule:#24302a;--ink:#eef2ee;--mute:#9aa79f;--red:#e3343a;--grey:#5d6b63;--grey2:#3a4640}
 :root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}

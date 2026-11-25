@@ -3,12 +3,13 @@
 Football, drawn with data. A static site for GitHub Pages: no build step, just HTML, CSS, a small charts script and bundled fonts.
 
 ## Structure
+Everything sits in the top level of the repository (no folders):
 - `index.html`: homepage
-- `posts/`: one HTML file per post
-- `assets/site.css`: all styling, including the font setup
-- `assets/charts.js`: chart helpers (pitch, scatter, bar rows, diverging bars, dumbbells)
-- `assets/logo.svg`: the Four-pass P logo, also used as the browser-tab icon
-- `assets/fonts/`: Barlow and Barlow Condensed (SIL Open Font Licence, see OFL.txt). Hosted here so visitors' browsers don't contact Google Fonts.
+- `united-shoot-more-than-anyone.html`: the first post. New posts are more HTML files alongside it.
+- `site.css`: all styling, including the font setup
+- `charts.js`: chart helpers (pitch, scatter, bar rows, diverging bars, dumbbells)
+- `logo.svg`: the Four-pass P logo, also the browser-tab icon
+- `barlow-*.woff2`, `OFL.txt`: the fonts and their licence, hosted here so visitors' browsers don't contact Google Fonts
 
 ## Going live
 
@@ -24,8 +25,8 @@ Football, drawn with data. A static site for GitHub Pages: no build step, just H
 
 ### 3. Upload the site
 1. Unzip `postmatchplots.zip`. Upload the contents of the `postmatchplots` folder, not the folder itself.
-2. On the repository page click "uploading an existing file", then drag in `index.html`, `README.md`, and the `assets` and `posts` folders. Use Chrome or Firefox; Safari can refuse folders.
-3. Check the list includes `assets/logo.svg`, the five files in `assets/fonts/` (four fonts plus OFL.txt), and `posts/united-shoot-more-than-anyone.html`. Click Commit changes.
+2. On the repository page click "uploading an existing file", then select every file and drag them in.
+3. Check the list includes `index.html`, `site.css`, `charts.js`, `logo.svg`, the four `.woff2` fonts, `OFL.txt` and the post file. Click Commit changes.
 
 ### 4. Switch on Pages and HTTPS
 1. Settings > Pages. Under Build and deployment, set Source to "Deploy from a branch", branch `main`, folder `/ (root)`, Save.
@@ -35,7 +36,7 @@ Football, drawn with data. A static site for GitHub Pages: no build step, just H
 ## Updating
 Add file > Upload files, and drop in the changed files. A file with the same name replaces the old one. The site updates within a minute or two.
 
-To add a post: copy `posts/united-shoot-more-than-anyone.html`, rename it, swap the words and the data arrays in the script at the bottom, and add a card for it in the Posts section of `index.html`.
+To add a post: copy `united-shoot-more-than-anyone.html`, rename it, swap the words and the data arrays in the script at the bottom, and add a card for it in the Posts section of `index.html`.
 
 ## Rules for what goes in the repo
 - The repo and its whole history are public. Deleting a file later doesn't remove it from history.
