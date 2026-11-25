@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post-Match Plots</title>
+<meta name="description" content="Football, drawn with data. Charts and short reads on Manchester United and the Premier League.">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="40" height="40">Post-Match Plots</a>
+  <nav><a href="#posts">Posts</a><a href="#about">About</a></nav>
+</div></header>
+
+<main>
+<section class="band pitchband"><div class="wrap post">
+  <div>
+    <p class="small" style="color:#c9d4cd;margin-bottom:12px">Latest &nbsp;/&nbsp; 24 November 2026</p>
+    <h1>United shoot more than anyone. So why are they 19th?</h1>
+    <p class="stand">203 shots, the most in the league, and 8 points to show for it. Nearly half come from outside the box, and the chances United give away are the best in the league. A look at where it's going wrong, plus what's happened to Bruno.</p>
+    <p style="margin-top:22px"><a class="card" style="display:inline-block;padding:12px 20px;background:var(--red);border-color:var(--red);font-weight:600" href="posts/united-shoot-more-than-anyone.html">Read the post</a></p>
+  </div>
+  <div class="fig tall" id="pitch"><svg role="img" aria-label="Half pitch. Inside the penalty box United have 10 goals from 110 shots. Outside it, 3 goals from 93 shots."></svg></div>
+</div></section>
+
+<section class="band" id="posts"><div class="wrap">
+  <h2>Posts</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;margin-top:16px">
+    <a class="card" href="posts/united-shoot-more-than-anyone.html">
+      <div class="meta">24 November 2026 &nbsp;/&nbsp; 8 min read</div>
+      <h3>United shoot more than anyone. So why are they 19th?</h3>
+      <p class="mute" style="margin:0 0 12px">Shot quality, long shots, a six-goal set-piece hole and Bruno's quieter season.</p>
+      <span class="tag">Man Utd</span><span class="tag">Shot quality</span><span class="tag">Set pieces</span>
+    </a>
+  </div>
+</div></section>
+
+<section class="band" id="about" style="background:var(--panel)"><div class="wrap post" style="align-items:start">
+  <div>
+    <h2>About</h2>
+    <p>Post-Match Plots is where I put the football questions I can't stop poking at, answered with charts. Mostly Manchester United, sometimes the rest of the league, always with the working shown.</p>
+    <p>I'm Georgia. I build dashboards and tell stories with data for a living, and this is what I do with it on a Saturday.</p>
+  </div>
+  <div>
+    <h3>How the numbers work</h3>
+    <p class="mute">Data comes from FotMob (Opta). Per-90 figures and percentiles compare players with 450+ league minutes in the same position. Early-season numbers move a lot, so every post says how many games it covers.</p>
+  </div>
+</div></section>
+</main>
+
+<footer class="band"><div class="wrap">
+  <span>Post-Match Plots. Football, drawn with data.</span>
+  <span>Data: FotMob / Opta</span>
+</div></footer>
+
+<script src="assets/charts.js"></script>
+<script>
+{
+  PMP.pitch(document.getElementById('pitch'), {
+    inside: ['10 from 110', 'goals from shots inside the box', '9.1% scored, incl. 2 penalties'],
+    outside: ['3 from 93', 'goals from shots outside the box', '3.2% scored, league 4.5%']
+  });
+}
+</script>
+</body>
+</html>
