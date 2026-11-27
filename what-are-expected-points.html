@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What are expected points? | Post-Match Plots</title>
+<meta name="description" content="Expected points (xPts) turn the chances in a match into the points that performance was worth. A worked example from Hull 2-0 United, and what it says about United's season.">
+<link rel="canonical" href="https://postmatchplots.github.io/what-are-expected-points.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Post-Match Plots" href="feed.xml">
+<meta property="og:type" content="article">
+<meta name="pmp:kind" content="guide">
+<meta property="article:modified_time" content="2026-11-27">
+<meta name="pmp:summary" content="The points a performance was worth, worked out from the chances.">
+<meta property="og:site_name" content="Post-Match Plots">
+<meta property="og:title" content="What are expected points?">
+<meta property="og:description" content="Expected points (xPts) turn the chances in a match into the points that performance was worth. A worked example from Hull 2-0 United, and what it says about United's season.">
+<meta property="og:url" content="https://postmatchplots.github.io/what-are-expected-points.html">
+<meta property="og:image" content="https://postmatchplots.github.io/social/what-are-expected-points.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What are expected points?">
+<meta name="twitter:description" content="Expected points (xPts) turn the chances in a match into the points that performance was worth. A worked example from Hull 2-0 United, and what it says about United's season.">
+<meta name="twitter:image" content="https://postmatchplots.github.io/social/what-are-expected-points.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What are expected points?", "description": "Expected points (xPts) turn the chances in a match into the points that performance was worth. A worked example from Hull 2-0 United, and what it says about United's season.", "dateModified": "2026-11-27", "image": "https://postmatchplots.github.io/social/what-are-expected-points.png", "mainEntityOfPage": "https://postmatchplots.github.io/what-are-expected-points.html", "author": {"@type": "Organization", "name": "Post-Match Plots", "url": "https://postmatchplots.github.io/"}, "publisher": {"@type": "Organization", "name": "Post-Match Plots", "logo": {"@type": "ImageObject", "url": "https://postmatchplots.github.io/logo.svg"}}}</script>
+<link rel="stylesheet" href="site.css">
+<style>
+.grid td,.grid th{text-align:center;width:20%}
+.grid td{font-variant-numeric:tabular-nums;border:2px solid var(--bg)}
+.grid td.act{outline:2px solid var(--red);outline-offset:-2px;font-weight:600}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><img src="logo.svg" alt="" width="40" height="40">Post-Match Plots</a>
+  <nav><a href="index.html#posts">Posts</a><a href="index.html#guides">Guides</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
+</div></header>
+
+<main>
+<section class="band pitchband"><div class="wrap">
+  <p class="small" style="color:#c9d4cd;margin-bottom:10px">Guide &nbsp;/&nbsp; How the numbers work</p>
+  <h1 style="max-width:900px">What are expected points?</h1>
+  <p class="stand">Expected points, or xPts, are the points a performance was worth, going by the chances each side made. Play the same match a thousand times with the same shots and they're what you'd average. Add them up over a season and you get a league table of how teams have played, rather than how the ball happened to bounce.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="figs"><div class="fg"><div class="num">55%</div><div class="lab">United's chance of winning at Hull, from the shots</div></div><div class="fg"><div class="num">1.9</div><div class="lab">expected points for United that day</div></div><div class="fg"><div class="num red">0</div><div class="lab">points actually won: Hull won 2-0</div></div></div>
+</div></section>
+
+<article class="band" style="padding-top:8px"><div class="wrap">
+<div class="sec read">
+  <h2>Start with the shots</h2>
+  <p>Take United's first game of the season, away at Hull. United had 21 shots worth 1.83 <a href="what-is-xg.html">xG</a> between them; Hull had 8 worth 1.07. Hull scored two from corners and set pieces and won 2-0.</p>
+  <p>Now treat every shot as its own roll of the dice. Mbeumo's 0.36 chance in the 78th minute goes in 36% of the time; Semi Ajayi's 0.52 chance from a corner goes in about half the time. Work through every combination of shots going in or not and you get the chance of every possible scoreline.</p>
+</div>
+<div class="chart">
+  <h3>Every scoreline, Hull v United</h3>
+  <div class="scroll"><table class="grid" id="grid" aria-label="Chance of each scoreline from the shots in Hull 2-0 United. The most likely results were 1-1 and United winning 2-1, about 14% each. The actual result, Hull 2-0, had a 3% chance."></table></div>
+  <p class="cap">Chance of each scoreline (%), from the xG of every shot in the match. The stronger the colour, the more likely. Red: United win; grey: draw or Hull win. Outlined: what actually happened. Scorelines beyond four goals left off.</p>
+</div>
+
+<div class="sec read">
+  <h2>Turn the scorelines into points</h2>
+  <p>Add up every scoreline where United score more and that's their chance of winning: 55%. A draw was 25%, a Hull win 20%. Then score it like the league does: three points for every win, one for every draw.</p>
+  <p class="callout">United: 3 × 0.55 + 0.25 = 1.9 expected points. Hull: 3 × 0.20 + 0.25 = 0.8.</p>
+  <p>So United played well enough to expect almost two points, and came away with none. Hull's two goals came from chances worth 0.80 xG.</p>
+</div>
+<div class="chart">
+  <h3>How Hull v United would usually go</h3>
+  <div class="rows" id="odds" role="img" aria-label="From the shots, United win 55% of the time, it's a draw 25% and Hull win 20%."></div>
+  <p class="cap">Chance of each result, from the xG of every shot. Data: FotMob / Opta.</p>
+</div>
+
+<div class="sec read">
+  <h2>Why not just compare xG?</h2>
+  <p>Because winning on xG by 2.5 to 0.3 and by 1.2 to 1.0 are very different afternoons, and xG alone treats them the same: you "won". Expected points tell you how safe the win should have been. They also deal with the fact that many small chances and one big one aren't the same thing, even if they add up to the same xG: one 0.6 chance goes in 60% of the time, six 0.1 chances give you at least one goal about 47% of the time.</p>
+</div>
+
+<div class="sec read">
+  <h2>Over a season it adds up</h2>
+  <p>One match is noisy. Eleven start to tell a story. United's chances have been worth 12.9 points, roughly 15th place. They've got 8 and sit 19th. Most of the gap came in three games: Hull, Man City and the 4-4 with Villa.</p>
+</div>
+<div class="chart">
+  <h3>United's league games: expected points against points won</h3>
+  <div class="key" style="margin-bottom:6px"><span><i style="border:2px solid #9aa79f;background:transparent"></i>Expected points</span><span><i style="background:#c9d4cd"></i>Points won</span><span><i style="background:#e3343a"></i>Under by more than 0.75</span></div>
+  <div class="rows" id="matches" role="img" aria-label="Expected points against points won in United's 11 league games. Hull away 1.90 expected, 0 won; Ipswich at home 2.84 expected, 3 won; Man City at home 1.22, 0; Aston Villa at home 1.77, 1."></div>
+  <p class="cap">Premier League 2026/27 to 24 November. Full table in <a href="united-expected-points.html">So where should United actually be?</a></p>
+</div>
+
+<div class="sec read">
+  <h2>What expected points can't do</h2>
+  <p><strong>Shots aren't really independent.</strong> A team 2-0 up sits back and lets the other side shoot from distance. The model treats every shot as a fresh roll of the dice, so it can't see that.</p>
+  <p><strong>No shot, no points.</strong> Like xG, it only counts chances that ended in a shot.</p>
+  <p><strong>It's not a refund.</strong> "Deserved to win" is a fair reading of a big xPts gap over one game. It isn't a claim on the points. Over a season, though, teams well below their expected points tend to drift back towards them, which is why it's worth watching.</p>
+  <p class="small">How it's worked out here: every shot in a match except own goals, each treated as an independent chance at its xG; the exact chance of every scoreline; expected points = 3 × win chance + draw chance. Data: FotMob (Opta), Premier League 2026/27 up to 24 November 2026. Shot-map xG can differ by a few hundredths from FotMob's headline match xG.</p>
+</div>
+</div></article>
+
+<section class="band" style="background:var(--panel)"><div class="wrap">
+  <h2>More guides</h2>
+  <div class="series"><a class="card" href="what-is-xg.html"><div class="meta">Guide</div><h3 style="font-size:19px;margin:0">What is xG?</h3></a><a class="card" href="what-are-percentiles.html"><div class="meta">Guide</div><h3 style="font-size:19px;margin:0">What are percentiles?</h3></a><a class="card" href="how-to-read-match-in-one-chart.html"><div class="meta">Guide</div><h3 style="font-size:19px;margin:0">How to read a Match in one chart</h3></a></div>
+</div></section>
+</main>
+
+<footer class="band"><div class="wrap">
+  <span>Post-Match Plots. Football, drawn with data.</span>
+  <span>Data: FotMob / Opta</span>
+</div></footer>
+
+<script src="charts.js"></script>
+<script>
+{
+  // Rows: United goals 0-4. Columns: Hull goals 0-3. Percent.
+  const G = [[3.4,6.0,3.0,0.6],[7.8,13.9,6.9,1.3],[7.8,13.9,7.0,1.3],[4.6,8.1,4.1,0.8],[1.8,3.1,1.6,0.3]];
+  let t = '<thead><tr><th style="text-align:left">United scored</th><th colspan="4" style="text-align:center">Hull scored</th></tr><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead><tbody>';
+  G.forEach((r, i) => {
+    t += `<tr><th style="text-align:left">${i}</th>` + r.map((v, j) => {
+      const col = i > j ? '227,52,58' : '201,212,205';
+      return `<td class="${i === 0 && j === 2 ? 'act' : ''}" style="background:rgba(${col},${(v / 14 * 0.75).toFixed(2)})" title="United ${i}, Hull ${j}: ${v}%">${v.toFixed(1)}</td>`;
+    }).join('') + '</tr>';
+  });
+  document.getElementById('grid').innerHTML = t + '</tbody>';
+
+  PMP.rows(document.getElementById('odds'), {max: 100, f: v => v + '%', rows: [
+    {n: 'United win', v: 55, u: true}, {n: 'Draw', v: 25}, {n: 'Hull win', v: 20}]});
+
+  const M = [["Hull (a) 0-2",1.90,0],["Ipswich (h) 5-2",2.84,3],["Everton (a) 2-2",1.06,1],["Man City (h) 0-1",1.22,0],["Fulham (a) 1-1",1.33,1],["Tottenham (h) 1-1",0.73,1],["Leeds (a) 1-1",0.95,1],["Bournemouth (h) 0-3",0.69,0],["Chelsea (a) 0-2",0.37,0],["Aston Villa (h) 4-4",1.77,1],["Liverpool (a) 0-4",0.06,0]];
+  const f1 = v => Number.isInteger(v) ? String(v) : v.toFixed(1);
+  PMP.dumbbell(document.getElementById('matches'), {rows: M.map(r => ({n: r[0], a: r[1], b: r[2], u: r[2] < r[1] - 0.75})), max: 3, ticks: [0, 1, 2, 3], fmt: f1, fmtA: v => v.toFixed(1), hi: true});
+}
+</script>
+</body>
+</html>

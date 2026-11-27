@@ -14,7 +14,9 @@ cards=[("home","index.html","#quality","Football, drawn with data.","One questio
 ("united-expected-points","united-expected-points.html","#xpts","So where should United actually be?","United at 11 games, part 6"),
 ("kobbie-mainoo","kobbie-mainoo.html","#both","Is Kobbie Mainoo the one thing going right?","Passing, dribbling, winning it back"),
 ("what-is-xg","what-is-xg.html","#gxg","What is xG?","Guide: how the numbers work"),
-("what-are-percentiles","what-are-percentiles.html","#pct","What are percentiles?","Guide: how the numbers work")]
+("what-are-percentiles","what-are-percentiles.html","#pct","What are percentiles?","Guide: how the numbers work"),
+("what-are-expected-points","what-are-expected-points.html","#matches","What are expected points?","Guide: how the numbers work"),
+("how-to-read-match-in-one-chart","how-to-read-match-in-one-chart.html","#race","How to read a Match in one chart","Guide: how the numbers work")]
 async def main(only=None):
     todo=[c for c in cards if not only or c[0] in only]
     async with async_playwright() as p:

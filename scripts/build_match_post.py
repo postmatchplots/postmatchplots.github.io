@@ -230,7 +230,7 @@ def build(match, words):
 </div>
 <div class="chart">
   <div class="fig" id="race"><svg role="img" aria-label="{e(f'Cumulative expected goals over the match. United finish on {xgf:.2f} xG and {gf} goals, {opp} on {xga:.2f} xG and {ga} goals.')}"></svg></div>
-  <p class="cap">Each step is a shot, the height of the step its xG. Dots are goals. Hover for the shot.{e(red_note)}</p>
+  <p class="cap">Each step is a shot, the height of the step its xG. Dots are goals. Hover for the shot.{e(red_note)} <a href="how-to-read-match-in-one-chart.html">How to read these charts</a>.</p>
 </div>
 
 <div class="sec read">

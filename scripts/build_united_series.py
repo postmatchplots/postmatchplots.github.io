@@ -353,7 +353,7 @@ posts["united-expected-points.html"] = page(
     [("8", "points, 19th in the table", True), ("12.9", "expected points, 15th", False), ("-4.9", "points below expected, 3rd biggest shortfall", True), ("0", "points from the 2-0 at Hull, where they were 55% to win", False)],
     """<div class="sec read">
   <h2>How expected points works</h2>
-  <p>Every shot has an xG: the chance a shot like it goes in. Treat each shot in a match as its own roll of the dice, work out the odds of every possible scoreline, and you get each team's chance of winning, drawing and losing. Three points for each win chance plus one for each draw chance gives the points a performance was "worth". Add them up over 11 games and you get a table of how teams have played, not how the dice landed.</p>
+  <p>Every shot has an xG: the chance a shot like it goes in. Treat each shot in a match as its own roll of the dice, work out the odds of every possible scoreline, and you get each team's chance of winning, drawing and losing. Three points for each win chance plus one for each draw chance gives the points a performance was "worth". Add them up over 11 games and you get a table of how teams have played, not how the dice landed. <a href="what-are-expected-points.html">More on how it works</a>.</p>
 </div>
 <div class="chart">
   <h3>Actual points against expected points, all 20 teams</h3>
