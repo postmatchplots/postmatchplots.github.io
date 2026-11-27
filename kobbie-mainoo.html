@@ -51,7 +51,7 @@
 </div>
 <div class="chart">
   <div class="key" style="margin-bottom:6px"><span><i style="background:#e3343a"></i>90th percentile or above</span><span><i style="background:#3a4640"></i>below</span></div>
-  <div class="rows" id="pct" role="img" aria-label="Kobbie Mainoo's percentiles among Premier League central midfielders. 99th for pass accuracy and dribbles, 97th for ball recoveries, 95th for defensive actions and line-breaking passes, 92nd for dribble success, 90th for passes completed. 43rd for xG, 18th for big chances created and distance covered, 4th for sprints."></div>
+  <div class="rows" id="pct" role="img" aria-label="Kobbie Mainoo's percentiles among Premier League central midfielders. 99th for pass accuracy and dribbles, 97th for ball recoveries, 95th for defensive actions and line-breaking passes, 92nd for dribble success, 90th for passes completed. 48th for xG, 18th for big chances created and distance covered, 4th for sprints."></div>
   <p class="cap">Percentile against the 47 PL central midfielders with 450+ minutes, per 90. 50 is the median midfielder.</p>
 </div>
 
@@ -107,7 +107,7 @@
 <script src="charts.js"></script>
 <script>
 {
-  const P = [['Pass accuracy',99],['Dribbles',99],['Ball recoveries',97],['Defensive actions',95],['Line-breaking passes',95],['Dribble success',92],['Passes completed',90],['Interceptions',78],['Tackles',77],['xA',61],['Shots',55],['xG',43],['Big chances created',18],['Distance covered',18],['Sprints',4]];
+  const P = [['Pass accuracy',99],['Dribbles',99],['Ball recoveries',97],['Defensive actions',95],['Line-breaking passes',95],['Dribble success',92],['Passes completed',90],['Interceptions',78],['Tackles',77],['xA',61],['Shots',55],['xG',48],['Big chances created',18],['Distance covered',18],['Sprints',4]];
   PMP.rows(document.getElementById('pct'), {max: 100, rows: P.map(r => ({n: r[0], v: r[1], u: r[1] >= 90}))});
 
   const C = [["Jordan Henderson",52.8,3.1],["Pascal Groß",53.5,2.7],["Granit Xhaka",51.5,6.2],["Matt Crooks",16.2,2],["Ryan Christie",37.3,8.4],["Youri Tielemans",55.6,5.7],["Matt Grimes",44.7,2.6],["Martin Ødegaard",56.7,3],["Sander Berge",61.6,4.1],["Saša Lukić",48.8,3.7],["Alex Iwobi",53.2,4.6],["Xaver Schlager",29.4,5.9],["Daichi Kamada",29.9,4.7],["Declan Rice",64.7,4.4],["Vitaly Janelt",38.8,3.9],["Exequiel Palacios",67.6,9.5],["Tyler Adams",44.9,6.3],["Ethan Ampadu",44,5.5],["Regan Slater",20.5,2.9],["Boubacar Kamara",41.5,4.1],["Alexis Mac Allister",46.7,5.9],["Dominik Szoboszlai",54.2,6.1],["Bruno Guimarães",54,5.3],["Sandro Tonali",55,4.6],["Anton Stach",22.5,3.6],["Ao Tanaka",36.9,4.5],["James Garner",48,6.1],["Quinten Timber",28.1,5.3],["Elliot Anderson",78,6.2],["James McAtee",36,7],["Moisés Caicedo",56.6,3.3],["Yasin Ayari",29.6,3.1],["Mamadou Sangaré",39.7,6.6],["Roméo Lavia",54.6,7],["Alex Scott",40.1,6.9],["Elliot Stroud",13.9,6],["Nico González",47.6,5.6],["Shea Charles",53.1,5.7],["Kobbie Mainoo",64.1,9.2],["Adam Wharton",32.2,3],["Archie Gray",34.3,3.6],["Mateus Fernandes",69,6.2],["Noah Sadiki",33.5,3.6],["Myles Lewis-Skelly",57.7,3],["Johan Manzambi",21.3,3.6],["Harrison Armstrong",26.7,4.2],["Chema Andrés",43.2,3.2]];
