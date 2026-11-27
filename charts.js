@@ -204,5 +204,44 @@ window.PMP = (() => {
     });
   }
 
-  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap};
+  /* Pizza: one player, slices of equal angle, each as long as its percentile.
+     d = {slices: [{lab, short, pct, val, tip, cat}]}  short is an optional label for narrow screens;  val is the short label under the name ("6 shots"); cat groups slices. */
+  function pizza(el, d) {
+    watch(el, (W, H) => {
+      const small = W < 520;
+      const cx = W / 2, cy = H / 2;
+      const R = Math.min(W / 2 - (small ? 74 : 120), H / 2 - 44), r0 = R * 0.12;
+      const n = d.slices.length, A = 2 * Math.PI / n;
+      const pt = (r, a) => [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+      const arc = (r1, r2, a1, a2) => {
+        const [x1, y1] = pt(r2, a1), [x2, y2] = pt(r2, a2), [x3, y3] = pt(r1, a2), [x4, y4] = pt(r1, a1);
+        return `M${x1} ${y1} A${r2} ${r2} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${r1} ${r1} 0 0 0 ${x4} ${y4}Z`;
+      };
+      const gap = 0.012;
+      let o = '';
+      d.slices.forEach((s, i) => {
+        const a1 = i * A + gap, a2 = (i + 1) * A - gap;
+        o += `<path d="${arc(r0, R, a1, a2)}" fill="${GREY}" fill-opacity=".22"/>`;
+      });
+      [0.25, 0.5, 0.75].forEach(f => { o += `<circle cx="${cx}" cy="${cy}" r="${r0 + (R - r0) * f}" fill="none" stroke="${RULE}" stroke-width="1"/>`; });
+      d.slices.forEach((s, i) => {
+        const a1 = i * A + gap, a2 = (i + 1) * A - gap, r = r0 + (R - r0) * Math.max(s.pct, 1.5) / 100;
+        o += `<path d="${arc(r0, r, a1, a2)}" fill="${RED}" fill-opacity="${s.pct >= 50 ? 1 : 0.55}"><title>${esc(s.tip)}</title></path>`;
+        const am = (i + 0.5) * A, low = s.pct < 30, [bx, by] = pt(low ? r0 + (R - r0) * 0.42 : r - 13, am);
+        o += `<text x="${bx}" y="${by + 4}" text-anchor="middle" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:${small ? 13 : 15}px${low ? ';fill:#9aa79f' : ''}">${s.pct}</text>`;
+        const [lx, ly] = pt(R + (small ? 10 : 14), am), sx = Math.sin(am);
+        const anchor = Math.abs(sx) < 0.2 ? 'middle' : sx > 0 ? 'start' : 'end';
+        const dy = Math.cos(am) > 0.8 ? -14 : Math.cos(am) < -0.8 ? 10 : -2;
+        o += `<text x="${lx}" y="${ly + dy}" text-anchor="${anchor}" style="font-size:${small ? 12 : 14}px">${esc(small && s.short ? s.short : s.lab)}</text>`;
+        o += `<text class="tick" x="${lx}" y="${ly + dy + (small ? 14 : 16)}" text-anchor="${anchor}" style="font-size:${small ? 11 : 13}px">${esc(s.val)}</text>`;
+      });
+      for (let i = 0; i < n; i++) if (d.slices[i].cat !== d.slices[(i + n - 1) % n].cat) {
+        const [x1, y1] = pt(r0, i * A), [x2, y2] = pt(R + 4, i * A);
+        o += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${LINE}" stroke-width="1.5"/>`;
+      }
+      return o;
+    });
+  }
+
+  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap, pizza};
 })();

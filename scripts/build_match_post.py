@@ -13,6 +13,7 @@ words.json   the words for the post, e.g.
       "stand": "...",                                  # the answer, up front, under the title
       "race": ["paragraph", "..."],                    # words above the xG race
       "shots": ["paragraph", "..."],                   # words above the shot map
+      "star": ["paragraph", "..."],                    # words above the star performer pizza
       "answer": "...",                                 # 'The answer' paragraph
       "published": "2026-12-07",                       # optional, defaults to today
       "opp_short": "Forest"                            # optional, shorter opponent name (keeps chart labels tidy)
@@ -48,6 +49,35 @@ def label(t, add):
     return f"{t}+{add}'" if add else f"{t}'"
 
 
+GROUPS = {"ST": "strikers", "AM/W": "attacking midfielders and wingers", "CM": "central midfielders",
+          "FB": "full-backs", "CB": "centre-backs"}
+UNITS = {"goals": ("goal", "goals"), "shots": ("shot", "shots"), "chances": ("chance", "chances"),
+         "dribbles": ("dribble", "dribbles"), "passes": ("pass", "passes"), "longballs": ("long ball", "long balls"),
+         "tackles": ("tackle", "tackles"), "ints": ("interception", "interceptions"), "clears": ("clearance", "clearances"),
+         "blocks": ("block", "blocks"), "recov": ("recovery", "recoveries"), "defacts": ("action", "actions"),
+         "sprints": ("sprint", "sprints")}
+
+SHORT = {"km": "Distance", "defacts": "Def. actions", "passes": "Passes", "chances": "Chances", "passpct": "Pass %",
+         "ints": "Interceptions", "longballs": "Long balls"}
+
+
+def slice_value(sl):
+    k, raw = sl["k"], sl["raw"]
+    if k == "km":
+        return f"{raw / 1000:.1f} km"
+    if k == "passpct":
+        return f"{raw:.0f}%"
+    if k in ("xg", "xa"):
+        return f"{raw:.2f} {'xG' if k == 'xg' else 'xA'}"
+    one, many = UNITS.get(k, ("", ""))
+    n = int(round(raw))
+    return f"{n} {one if n == 1 else many}".strip()
+
+
+def ordinal(n):
+    return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
 def build(match, words):
     opp = words.get("opp_short") or match["opp"]
     home = match["home"]
@@ -72,7 +102,7 @@ def build(match, words):
         if abs(fx[0] - xgf) > 0.06 or abs(fx[1] - xga) > 0.06:
             print(f"  CHECK: shot xG {xgf:.2f}-{xga:.2f} vs FotMob headline {fx[0]:.2f}-{fx[1]:.2f}")
         else:
-            print(f"  xG matches FotMob: {xgf:.2f}-{xga:.2f}")
+            print(f"  xG {xgf:.2f}-{xga:.2f}, within 0.06 of FotMob's headline {fx[0]:.2f}-{fx[1]:.2f} (rounding on their side)")
     if top.get("total_shots") and [int(v) for v in top["total_shots"]] != [sf, sa]:
         print(f"  CHECK: {sf}-{sa} shots in the shot map vs FotMob's {top['total_shots']}")
 
@@ -98,6 +128,32 @@ def build(match, words):
         "left": {"n": opp, "u": False, "shots": map_shots(False), "sub": f"{ga} goals, {xga:.2f} xG, {sa} shots"},
         "right": {"n": "United", "u": True, "shots": map_shots(True), "sub": f"{gf} goals, {xgf:.2f} xG, {sf} shots"}}
 
+    paras = lambda ps: "\n".join(f"  <p>{p}</p>" for p in ps)
+    star = match.get("star")
+    star_html, star_js = "", ""
+    if star:
+        grp = GROUPS.get(star["grp"], "players in his position")
+        sl = []
+        for x in star["slices"]:
+            val = slice_value(x)
+            per90 = "" if x["isRate"] or star["mins"] == 90 else f", {x['p90']:.2f} per 90"
+            tip = f"{x['lab']}: {val} in {star['mins']} minutes{per90}. {ordinal(x['pct'])} percentile against PL {grp}' season averages"
+            sl.append({"lab": x["lab"], "short": SHORT.get(x["k"], x["lab"]), "pct": x["pct"], "val": val, "tip": tip, "cat": x["cat"]})
+        print(f"Star performer: {star['n']} ({star['grp']}, {star['mins']} mins, rating {star['rating']}), ranked against {star['pool']} players")
+        mins_note = "" if star["mins"] >= 85 else f" He played {star['mins']} minutes, so his numbers are scaled up to 90."
+        star_html = f"""
+<div class="sec read">
+  <h2>{e(words.get('star_title') or 'Star performer: ' + star['n'])}</h2>
+{paras(words.get('star', []))}
+</div>
+<div class="chart">
+  <div class="fig" id="star" style="min-height:0;aspect-ratio:1.3;max-width:760px"><svg role="img" aria-label="{e(f"Pizza chart of {star['n']}'s match against PL {grp}. " + '; '.join(f"{x['lab']} {x['pct']}" for x in star['slices']))}"></svg></div>
+  <div class="key"><span><i style="background:#e3343a"></i>above the median</span><span><i style="background:#e3343a;opacity:.55"></i>below it</span></div>
+  <p class="cap">Each slice ranks his numbers from this match, per 90 minutes, against the season averages of the {star['pool']} PL {grp} with 450+ minutes. 50 is the median. FotMob match rating {star['rating']}.{e(mins_note)} xG includes penalties.</p>
+</div>
+"""
+        star_js = f"\n  PMP.pizza(document.getElementById('star'), {json.dumps({'slices': sl}, ensure_ascii=False)});"
+
     # ---- page
     d = datetime.strptime(match["date"], "%Y-%m-%d")
     nice_date = f"{d.day} {d.strftime('%B %Y')}"
@@ -112,7 +168,6 @@ def build(match, words):
           "author": {"@type": "Organization", "name": "Post-Match Plots", "url": BASE},
           "publisher": {"@type": "Organization", "name": "Post-Match Plots", "logo": {"@type": "ImageObject", "url": BASE + "logo.svg"}},
           "isPartOf": {"@type": "CreativeWorkSeries", "name": SERIES}}
-    paras = lambda ps: "\n".join(f"  <p>{p}</p>" for p in ps)
     red_note = ""
     if match["reds"]:
         red_note = " Dotted line: " + ", ".join(f"{r['n']} sent off ({label(r['t'], 0)})" for r in match["reds"]) + "."
@@ -184,6 +239,7 @@ def build(match, words):
   <p class="cap">United shoot right, {e(opp)} left. Bigger circle, better chance. Filled circles are goals. Own goals left out.</p>
 </div>
 
+{star_html}
 <div class="sec read">
   <h2>The answer</h2>
   <p>{words['answer']}</p>
@@ -209,7 +265,7 @@ def build(match, words):
 <script>
 {{
   PMP.xgrace(document.getElementById('race'), {json.dumps(race, ensure_ascii=False)});
-  PMP.shotmap(document.getElementById('shots'), {json.dumps(shotmap, ensure_ascii=False)});
+  PMP.shotmap(document.getElementById('shots'), {json.dumps(shotmap, ensure_ascii=False)});{star_js}
 }}
 </script>
 </body>
