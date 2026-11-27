@@ -13,7 +13,7 @@ A static site on GitHub Pages: plain HTML, CSS, a small charts script and self-h
 
 **Look and feel**
 - `site.css`: all the styling, including the font setup.
-- `charts.js`: chart helpers (`PMP.pitch`, `PMP.scatter`, `PMP.rows`, `PMP.diverge`, `PMP.dumbbell`, `PMP.xgrace`, `PMP.shotmap`, `PMP.pizza`).
+- `charts.js`: chart helpers (`PMP.pitch`, `PMP.scatter`, `PMP.rows`, `PMP.diverge`, `PMP.dumbbell`, `PMP.xgrace`, `PMP.shotmap`, `PMP.versus`, `PMP.pizza`).
 - `logo.svg`: the logo, also the browser-tab icon. `apple-touch-icon.png` is the iPhone home-screen version.
 - `barlow-*.woff2`, `OFL.txt`: the fonts and their licence, hosted here so visitors' browsers never contact Google Fonts.
 - `social/`: the 1200x630 preview images shown when a page is shared, one per page, named after it.
@@ -49,7 +49,7 @@ A static site on GitHub Pages: plain HTML, CSS, a small charts script and self-h
 
 ## Match in one chart (every Monday)
 
-An xG race, a shot map and a star performer pizza for United's latest league game, built from a template.
+An xG race, a shot map and a star performer for United's latest league game, built from a template.
 
 1. Open the match on fotmob.com and copy its address.
 2. Paste the address into `URL` at the top of `scripts/pull_match.js`, run the script in the browser console on any fotmob.com page, and save what it returns as a `.json` file **outside this repo** (raw data never goes on the site).
@@ -57,7 +57,7 @@ An xG race, a shot map and a star performer pizza for United's latest league gam
 4. Run `python scripts/build_match_post.py match.json words.json`. It writes the page, adds and makes the share image, and prints checks (score, xG and shot counts against FotMob's own numbers). Fix anything it flags.
 5. Open the page to check it, then push. The posts group on the homepage as "Match in one chart", newest first.
 
-The star performer pizza picks United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. Each slice ranks his match numbers, per 90, against the season averages of PL players in his position with 450+ minutes.
+The star performer is United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. His numbers from the match sit beside the season average per game for PL players in his position with 450+ minutes (scaled to his minutes if he came off early).
 
 ## House rules
 

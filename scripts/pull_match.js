@@ -13,8 +13,8 @@ const top = {};
 for (const s of (c.stats?.Periods?.All?.stats?.find(x => x.key === 'top_stats' || x.title === 'Top stats')?.stats || []))
   if (Array.isArray(s.stats)) top[s.key || s.title] = uh ? s.stats : [s.stats[1], s.stats[0]];
 // ---- Star performer: United's best-rated outfielder (60+ minutes), unless STAR names someone.
-// Each match stat is turned into a per-90 rate and ranked against the season per-90 averages of
-// every PL player in the same position group with 450+ minutes (a genuine zero if missing from a list).
+// His numbers from the match, beside the season average per 90 of every PL player in the same
+// position group with 450+ minutes (a player missing from a list has a genuine zero).
 const STAR = '';  // e.g. 'Kobbie Mainoo' to choose the player yourself
 const SEASON = 36781;
 const groupOf = c => c === 11 ? 'GK' : c >= 33 && c <= 37 ? 'CB' : [32, 38, 51, 59, 62, 68, 71, 79].includes(c) ? 'FB'
@@ -64,9 +64,10 @@ if (pick) {
     const by = Object.fromEntries(list.map(x => [x.ParticiantId, sub ? x.SubStatValue : x.StatValue]));
     const raw = read(pick.s) ?? 0;
     const val = isRate ? raw : raw * 90 / mins;
-    const others = pool.map(id => by[id] ?? (isRate ? null : 0)).filter(v => v != null);
-    const pct = others.length ? Math.round(100 * (others.filter(v => v < val).length + 0.5 * others.filter(v => v === val).length) / others.length) : null;
-    slices.push({k, lab, cat, raw: +(+raw).toFixed(2), p90: +val.toFixed(2), pct, isRate: !!isRate});
+    // Missing from a list: a genuine zero for counts, but not for rates or tracking data (not every player is tracked)
+    const others = pool.map(id => by[id] ?? (isRate || name.startsWith('phys_') ? null : 0)).filter(v => v != null);
+    const avg = others.length ? others.reduce((a, v) => a + v, 0) / others.length : null;
+    slices.push({k, lab, cat, raw: +(+raw).toFixed(2), p90: +val.toFixed(2), avg90: avg == null ? null : +avg.toFixed(3), isRate: !!isRate});
   }
   star = {n: pick.p.name, grp, mins, rating: pick.s['FotMob rating'], pool: pool.length, slices};
 }

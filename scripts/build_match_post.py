@@ -13,7 +13,7 @@ words.json   the words for the post, e.g.
       "stand": "...",                                  # the answer, up front, under the title
       "race": ["paragraph", "..."],                    # words above the xG race
       "shots": ["paragraph", "..."],                   # words above the shot map
-      "star": ["paragraph", "..."],                    # words above the star performer pizza
+      "star": ["paragraph", "..."],                    # words above the star performer chart
       "answer": "...",                                 # 'The answer' paragraph
       "published": "2026-12-07",                       # optional, defaults to today
       "opp_short": "Forest"                            # optional, shorter opponent name (keeps chart labels tidy)
@@ -51,31 +51,19 @@ def label(t, add):
 
 GROUPS = {"ST": "strikers", "AM/W": "attacking midfielders and wingers", "CM": "central midfielders",
           "FB": "full-backs", "CB": "centre-backs"}
-UNITS = {"goals": ("goal", "goals"), "shots": ("shot", "shots"), "chances": ("chance", "chances"),
-         "dribbles": ("dribble", "dribbles"), "passes": ("pass", "passes"), "longballs": ("long ball", "long balls"),
-         "tackles": ("tackle", "tackles"), "ints": ("interception", "interceptions"), "clears": ("clearance", "clearances"),
-         "blocks": ("block", "blocks"), "recov": ("recovery", "recoveries"), "defacts": ("action", "actions"),
-         "sprints": ("sprint", "sprints")}
-
-SHORT = {"km": "Distance", "defacts": "Def. actions", "passes": "Passes", "chances": "Chances", "passpct": "Pass %",
-         "ints": "Interceptions", "longballs": "Long balls"}
+CATS = {"att": "Attacking", "pos": "On the ball", "def": "Without the ball", "phy": "Running"}
 
 
-def slice_value(sl):
-    k, raw = sl["k"], sl["raw"]
+def fmt(k, v, mine):
+    """His number as it happened; the average to one more decimal place."""
     if k == "km":
-        return f"{raw / 1000:.1f} km"
+        return f"{v / 1000:.1f} km" if mine else f"{v / 1000:.1f}"
     if k == "passpct":
-        return f"{raw:.0f}%"
+        return f"{v:.0f}%"
     if k in ("xg", "xa"):
-        return f"{raw:.2f} {'xG' if k == 'xg' else 'xA'}"
-    one, many = UNITS.get(k, ("", ""))
-    n = int(round(raw))
-    return f"{n} {one if n == 1 else many}".strip()
+        return f"{v:.2f}"
+    return f"{v:.0f}" if mine else f"{v:.1f}"
 
-
-def ordinal(n):
-    return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
 
 
 def build(match, words):
@@ -133,26 +121,30 @@ def build(match, words):
     star_html, star_js = "", ""
     if star:
         grp = GROUPS.get(star["grp"], "players in his position")
-        sl = []
+        mins = star["mins"]
+        rows = []
         for x in star["slices"]:
-            val = slice_value(x)
-            per90 = "" if x["isRate"] or star["mins"] == 90 else f", {x['p90']:.2f} per 90"
-            tip = f"{x['lab']}: {val} in {star['mins']} minutes{per90}. {ordinal(x['pct'])} percentile against PL {grp}' season averages"
-            sl.append({"lab": x["lab"], "short": SHORT.get(x["k"], x["lab"]), "pct": x["pct"], "val": val, "tip": tip, "cat": x["cat"]})
-        print(f"Star performer: {star['n']} ({star['grp']}, {star['mins']} mins, rating {star['rating']}), ranked against {star['pool']} players")
-        mins_note = "" if star["mins"] >= 85 else f" He played {star['mins']} minutes, so his numbers are scaled up to 90."
+            if x.get("avg90") is None:
+                continue
+            avg = x["avg90"] if x["isRate"] else x["avg90"] * mins / 90
+            vf, af = fmt(x["k"], x["raw"], True), fmt(x["k"], avg, False)
+            tip = f"{x['lab']}: {vf} against an average of {af} for PL {grp}" + ("" if x["isRate"] or mins >= 89 else f" over {mins} minutes")
+            rows.append({"lab": x["lab"], "v": x["raw"], "avg": round(avg, 3), "vf": vf, "af": af, "tip": tip, "cat": x["cat"]})
+        above = sum(1 for r in rows if r["v"] >= r["avg"])
+        print(f"Star performer: {star['n']} ({star['grp']}, {mins} mins, rating {star['rating']}), above average on {above} of {len(rows)}")
+        mins_note = "" if mins >= 89 else f" He played {mins} minutes, so the average is scaled to {mins} minutes too."
         star_html = f"""
 <div class="sec read">
   <h2>{e(words.get('star_title') or 'Star performer: ' + star['n'])}</h2>
 {paras(words.get('star', []))}
 </div>
 <div class="chart">
-  <div class="fig" id="star" style="min-height:0;aspect-ratio:1.3;max-width:760px"><svg role="img" aria-label="{e(f"Pizza chart of {star['n']}'s match against PL {grp}. " + '; '.join(f"{x['lab']} {x['pct']}" for x in star['slices']))}"></svg></div>
-  <div class="key"><span><i style="background:#e3343a"></i>above the median</span><span><i style="background:#e3343a;opacity:.55"></i>below it</span></div>
-  <p class="cap">Each slice ranks his numbers from this match, per 90 minutes, against the season averages of the {star['pool']} PL {grp} with 450+ minutes. 50 is the median. FotMob match rating {star['rating']}.{e(mins_note)} xG includes penalties.</p>
+  <div class="key" style="margin-bottom:8px"><span><i style="background:#e3343a;border-radius:2px"></i>his game, above average</span><span><i style="background:#5d6b63;border-radius:2px"></i>below average</span><span><i style="width:2px;height:16px;border-radius:0;background:#eef2ee"></i>average for PL {e(grp)}</span></div>
+  <div class="rows" id="star" style="max-width:860px" role="img" aria-label="{e(f"{star['n']}'s numbers from the match against the average for Premier League {grp}: " + '; '.join(f"{r['lab']} {r['vf']} against {r['af']}" for r in rows))}"></div>
+  <p class="cap">His numbers from this match, then the season average per game for the {star['pool']} PL {e(grp)} with 450+ minutes. The marker in the middle is that average; a bar reaching the end is at least double it. FotMob match rating {star['rating']}.{e(mins_note)} xG includes penalties.</p>
 </div>
 """
-        star_js = f"\n  PMP.pizza(document.getElementById('star'), {json.dumps({'slices': sl}, ensure_ascii=False)});"
+        star_js = f"\n  PMP.versus(document.getElementById('star'), {json.dumps({'rows': rows, 'cats': CATS}, ensure_ascii=False)});"
 
     # ---- page
     d = datetime.strptime(match["date"], "%Y-%m-%d")

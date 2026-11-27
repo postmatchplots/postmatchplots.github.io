@@ -243,5 +243,22 @@ window.PMP = (() => {
     });
   }
 
-  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap, pizza};
+  /* One player's match against an average, HTML rows. The average always sits at the middle of the track;
+     the bar runs to his value on that scale (capped at twice the average, the number shows the rest).
+     d = {rows: [{lab, v, avg, vf, af, tip, cat}], cats: {att: 'Attacking', ...}} */
+  function versus(el, d) {
+    let last = null, o = '';
+    d.rows.forEach(r => {
+      if (d.cats && r.cat !== last) { o += `<div class="vs-head">${esc(d.cats[r.cat] || '')}</div>`; last = r.cat; }
+      const ratio = r.avg > 0 ? r.v / r.avg : (r.v > 0 ? 2 : 1);
+      const w = Math.min(ratio, 2) / 2 * 100, over = ratio > 2;
+      const up = r.v >= r.avg;
+      o += `<div class="row vs${up ? ' u' : ''}" title="${esc(r.tip || '')}"><span>${esc(r.lab)}</span>` +
+        `<div class="vs-track"><div class="bar grow" style="width:${w}%;${up ? '' : 'background:var(--grey)'}${over ? ';border-radius:0' : ''}"></div>${over ? '<b class="vs-more">›</b>' : ''}<i class="vs-avg"></i></div>` +
+        `<span class="v">${esc(r.vf)}<span class="mute"> / ${esc(r.af)}</span></span></div>`;
+    });
+    el.innerHTML = o;
+  }
+
+  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap, pizza, versus};
 })();
