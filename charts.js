@@ -284,7 +284,7 @@ window.PMP = (() => {
       o += `<div class="row dt"><span>${esc(r.n)}</span><div class="dt-track"><i class="dt-avg" style="left:${pc(1)}%"></i>` +
         `<b class="dt-dot" style="left:${pc(b / r.avg)}%;background:#c9d4cd" title="${esc(d.teams[1].n)}: ${esc(f(b))}"></b>` +
         `<b class="dt-dot" style="left:${pc(a / r.avg)}%;background:var(--red)" title="${esc(d.teams[0].n)}: ${esc(f(a))}"></b></div>` +
-        `<span class="v"><b style="color:#fff">${esc(f(a))}</b><span class="mute"> / ${esc(f(b))} / avg ${esc(f(r.avg))}</span></span></div>`;
+        `<span class="v"><b style="color:#fff">${esc(f(a))}</b><span class="mute"> / ${esc(f(b))}</span><span class="mute dt-avgv"> / avg ${esc(f(r.avg))}</span></span></div>`;
     });
     o += `<div class="row dt axis"><span></span><div class="dt-track" style="background:none">${[0, 1, 2, 3].filter(t => t <= max).map(t => `<span style="left:${pc(t)}%">${t ? t + '×' : '0'}</span>`).join('')}</div><span></span></div>`;
     el.innerHTML = o;

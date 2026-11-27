@@ -117,4 +117,4 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .dt-dot{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--bg)}
 .row.dt.axis{font-size:13px;color:var(--mute)}.row.dt.axis .dt-track span{position:absolute;transform:translateX(-50%)}
 .row.st{grid-template-columns:8.5em minmax(0,1fr) 3.2em}
-@media(max-width:600px){.row.dt{grid-template-columns:6.4em minmax(0,1fr) 7.4em;font-size:13px}}
+@media(max-width:600px){.row.dt{grid-template-columns:6.4em minmax(0,1fr) 5.4em;font-size:13px}.dt-avgv{display:block;font-size:12px;line-height:1.2}}
