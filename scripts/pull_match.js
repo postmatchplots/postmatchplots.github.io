@@ -13,8 +13,9 @@ const top = {};
 for (const s of (c.stats?.Periods?.All?.stats?.find(x => x.key === 'top_stats' || x.title === 'Top stats')?.stats || []))
   if (Array.isArray(s.stats)) top[s.key || s.title] = uh ? s.stats : [s.stats[1], s.stats[0]];
 // ---- Star performer: United's best-rated outfielder (60+ minutes), unless STAR names someone.
-// His numbers from the match, beside the season average per 90 of every PL player in the same
-// position group with 450+ minutes (a player missing from a list has a genuine zero).
+// His numbers from the match, beside his own season average per 90 (and, as a fallback for players
+// with few minutes, the average per 90 of PL players in his position group with 450+ minutes).
+// A player missing from a list has a genuine zero, except for rates and tracking data.
 const STAR = '';  // e.g. 'Kobbie Mainoo' to choose the player yourself
 const SEASON = 36781;
 const groupOf = c => c === 11 ? 'GK' : c >= 33 && c <= 37 ? 'CB' : [32, 38, 51, 59, 62, 68, 71, 79].includes(c) ? 'FB'
@@ -54,7 +55,9 @@ if (pick) {
   const grp = groupOf(pick.p.positionId) || groupOf(pick.p.usualPosition?.[0] ?? pick.p.usualPosition);
   const keys = TEMPLATE[grp] || TEMPLATE['CM'];
   const board = async s => (await fetch(`https://data.fotmob.com/stats/47/season/${SEASON}/${s}.json`).then(r => r.json())).TopLists[0].StatList;
-  const pool = (await board('mins_played')).filter(x => x.MinutesPlayed >= 450 && groupOf(x.Positions?.[0]) === grp).map(x => x.ParticiantId);
+  const minsList = await board('mins_played');
+  const pool = minsList.filter(x => x.MinutesPlayed >= 450 && groupOf(x.Positions?.[0]) === grp).map(x => x.ParticiantId);
+  const pid = Number(pick.p.id), seasonMins = minsList.find(x => x.ParticiantId === pid)?.MinutesPlayed || 0;
   const mins = pick.s['Minutes played'];
   const slices = [];
   for (const k of keys) {
@@ -67,9 +70,10 @@ if (pick) {
     // Missing from a list: a genuine zero for counts, but not for rates or tracking data (not every player is tracked)
     const others = pool.map(id => by[id] ?? (isRate || name.startsWith('phys_') ? null : 0)).filter(v => v != null);
     const avg = others.length ? others.reduce((a, v) => a + v, 0) / others.length : null;
-    slices.push({k, lab, cat, raw: +(+raw).toFixed(2), p90: +val.toFixed(2), avg90: avg == null ? null : +avg.toFixed(3), isRate: !!isRate});
+    const own = by[pid] ?? (isRate || name.startsWith('phys_') || !seasonMins ? null : 0);
+    slices.push({k, lab, cat, raw: +(+raw).toFixed(2), p90: +val.toFixed(2), own90: own == null ? null : +(+own).toFixed(3), avg90: avg == null ? null : +avg.toFixed(3), isRate: !!isRate});
   }
-  star = {n: pick.p.name, grp, mins, rating: pick.s['FotMob rating'], pool: pool.length, slices};
+  star = {n: pick.p.name, grp, mins, seasonMins, rating: pick.s['FotMob rating'], pool: pool.length, slices};
 }
 
 JSON.stringify({

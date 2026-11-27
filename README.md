@@ -57,7 +57,7 @@ An xG race, a shot map and a star performer for United's latest league game, bui
 4. Run `python scripts/build_match_post.py match.json words.json`. It writes the page, adds and makes the share image, and prints checks (score, xG and shot counts against FotMob's own numbers). Fix anything it flags.
 5. Open the page to check it, then push. The posts group on the homepage as "Match in one chart", newest first.
 
-The star performer is United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. His numbers from the match sit beside the season average per game for PL players in his position with 450+ minutes (scaled to his minutes if he came off early).
+The star performer is United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. His numbers from the match sit beside his own Premier League average per 90 this season, scaled to his minutes if he came off early. If he's played under 270 league minutes, the average for PL players in his position (450+ minutes) is used instead and the caption says so.
 
 ## House rules
 

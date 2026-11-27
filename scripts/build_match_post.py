@@ -122,26 +122,37 @@ def build(match, words):
     if star:
         grp = GROUPS.get(star["grp"], "players in his position")
         mins = star["mins"]
+        surname = star["n"].split()[-1]
+        # His own season average per 90, unless he has too few league minutes for it to mean much
+        own = star.get("seasonMins", 0) >= 270
+        base = "own90" if own else "avg90"
+        ref = f"his season average" if own else f"the average for PL {grp}"
         rows = []
         for x in star["slices"]:
-            if x.get("avg90") is None:
+            if x.get(base) is None:
                 continue
-            avg = x["avg90"] if x["isRate"] else x["avg90"] * mins / 90
+            avg = x[base] if x["isRate"] or mins >= 89 else x[base] * mins / 90
             vf, af = fmt(x["k"], x["raw"], True), fmt(x["k"], avg, False)
-            tip = f"{x['lab']}: {vf} against an average of {af} for PL {grp}" + ("" if x["isRate"] or mins >= 89 else f" over {mins} minutes")
+            tip = f"{x['lab']}: {vf} against {ref} of {af}" + ("" if x["isRate"] or mins >= 89 else f" for {mins} minutes")
             rows.append({"lab": x["lab"], "v": x["raw"], "avg": round(avg, 3), "vf": vf, "af": af, "tip": tip, "cat": x["cat"]})
         above = sum(1 for r in rows if r["v"] >= r["avg"])
-        print(f"Star performer: {star['n']} ({star['grp']}, {mins} mins, rating {star['rating']}), above average on {above} of {len(rows)}")
-        mins_note = "" if mins >= 89 else f" He played {mins} minutes, so the average is scaled to {mins} minutes too."
+        print(f"Star performer: {star['n']} ({star['grp']}, {mins} mins, rating {star['rating']}), above {ref} on {above} of {len(rows)}")
+        if not own:
+            print(f"  NOTE: only {star.get('seasonMins', 0)} league minutes, so compared with the position average instead")
+        scale_note = "" if mins >= 89 else f" He played {mins} minutes, so the average is scaled to {mins} minutes."
+        if own:
+            cap = f"His numbers from this match, then his own Premier League average per 90 minutes this season ({star['seasonMins']} minutes, this game included).{scale_note}"
+        else:
+            cap = f"His numbers from this match, then the average per 90 minutes for the {star['pool']} PL {grp} with 450+ minutes. He's played too little this season for his own average to mean much.{scale_note}"
         star_html = f"""
 <div class="sec read">
   <h2>{e(words.get('star_title') or 'Star performer: ' + star['n'])}</h2>
 {paras(words.get('star', []))}
 </div>
 <div class="chart">
-  <div class="key" style="margin-bottom:8px"><span><i style="background:#e3343a;border-radius:2px"></i>his game, above average</span><span><i style="background:#5d6b63;border-radius:2px"></i>below average</span><span><i style="width:2px;height:16px;border-radius:0;background:#eef2ee"></i>average for PL {e(grp)}</span></div>
-  <div class="rows" id="star" style="max-width:860px" role="img" aria-label="{e(f"{star['n']}'s numbers from the match against the average for Premier League {grp}: " + '; '.join(f"{r['lab']} {r['vf']} against {r['af']}" for r in rows))}"></div>
-  <p class="cap">His numbers from this match, then the season average per game for the {star['pool']} PL {e(grp)} with 450+ minutes. The marker in the middle is that average; a bar reaching the end is at least double it. FotMob match rating {star['rating']}.{e(mins_note)} xG includes penalties.</p>
+  <div class="key" style="margin-bottom:8px"><span><i style="background:#e3343a;border-radius:2px"></i>this game, above {e(ref)}</span><span><i style="background:#5d6b63;border-radius:2px"></i>below it</span><span><i style="width:2px;height:16px;border-radius:0;background:#eef2ee"></i>{e(ref)}</span></div>
+  <div class="rows" id="star" style="max-width:860px" role="img" aria-label="{e(f"{star['n']}'s numbers from the match against {ref}: " + '; '.join(f"{r['lab']} {r['vf']} against {r['af']}" for r in rows))}"></div>
+  <p class="cap">{e(cap)} The marker in the middle is that average; a bar reaching the end is at least double it. FotMob match rating {star['rating']}. xG includes penalties.</p>
 </div>
 """
         star_js = f"\n  PMP.versus(document.getElementById('star'), {json.dumps({'rows': rows, 'cats': CATS}, ensure_ascii=False)});"
