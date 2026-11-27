@@ -113,5 +113,96 @@ window.PMP = (() => {
     }).join('') + `<div class="row db axis"><span></span><div class="track" style="background:none;height:auto">${(d.ticks || [0, 50, 100]).map(t => `<span style="left:${pc(t)}%">${t}</span>`).join('')}</div><span></span></div>`;
   }
 
-  return {pitch, scatter, rows, diverge, slope, dumbbell};
+  /* xG race: cumulative xG step lines for two teams.
+     d = {teams: [{n, u, shots: [{m, xg, goal, who}]}, ...], reds: [{m, label}], end}
+     m is the match minute to plot (stoppage time already folded in), u marks United. */
+  function xgrace(el, d) {
+    watch(el, (W, H) => {
+      const small = W < 520;
+      const m = {l: 40, r: small ? 92 : 128, t: 18, b: 40};
+      const end = d.end || 95;
+      const top = Math.max(1, ...d.teams.map(t => t.shots.reduce((a, s) => a + s.xg, 0)));
+      const step = top > 3 ? 1 : 0.5;
+      const ymax = Math.ceil((top + 0.1) / step) * step;
+      const X = v => m.l + v / end * (W - m.l - m.r), Y = v => H - m.b - v / ymax * (H - m.t - m.b);
+      let o = '';
+      for (let v = 0; v <= ymax + 1e-9; v += step) o += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="${RULE}"/><text class="tick" x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">${v % 1 ? v.toFixed(1) : v}</text>`;
+      [0, 15, 30, 45, 60, 75, 90].filter((t, i) => !small || i % 2 === 0 || t === 45).forEach(t => { o += `<text class="tick" x="${X(t)}" y="${H - m.b + 20}" text-anchor="middle">${t}'</text>`; });
+      o += `<line x1="${X(45)}" x2="${X(45)}" y1="${m.t}" y2="${H - m.b}" stroke="${RULE}" stroke-dasharray="3 4"/>`;
+      o += `<text class="tick" x="${(m.l + W - m.r) / 2}" y="${H - 6}" text-anchor="middle">Minute</text>`;
+      (d.reds || []).forEach(r => {
+        o += `<line x1="${X(r.m)}" x2="${X(r.m)}" y1="${m.t}" y2="${H - m.b}" stroke="${LINE}" stroke-dasharray="2 3"/>`;
+        o += `<text class="tick" x="${X(r.m) + 6}" y="${m.t + 12}">${esc(r.label)}</text>`;
+      });
+      const order = d.teams.slice().sort((a, b) => a.u - b.u);
+      const ends = [];
+      order.forEach(t => {
+        const col = t.u ? RED : '#c9d4cd';
+        let cum = 0, p = `M${X(0)} ${Y(0)}`;
+        const marks = [];
+        t.shots.slice().sort((a, b) => a.m - b.m).forEach(s => {
+          p += ` H${X(s.m)}`; cum += s.xg; p += ` V${Y(cum)}`;
+          marks.push({s, y: cum});
+        });
+        p += ` H${X(end)}`;
+        o += `<path d="${p}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round"/>`;
+        marks.forEach(({s, y}) => {
+          const tip = `${s.who}, ${s.label} (${s.xg.toFixed(2)} xG)${s.goal ? ', goal' : ''}`;
+          o += s.goal
+            ? `<circle cx="${X(s.m)}" cy="${Y(y)}" r="6.5" fill="${col}" stroke="#0b0f0d" stroke-width="2"><title>${esc(tip)}</title></circle>`
+            : `<circle cx="${X(s.m)}" cy="${Y(y)}" r="9" fill="transparent"><title>${esc(tip)}</title></circle>`;
+        });
+        ends.push({t, col, y: Y(cum), v: cum});
+      });
+      if (ends.length === 2 && Math.abs(ends[0].y - ends[1].y) < 34) {
+        const [lo, hi] = ends[0].y > ends[1].y ? [ends[0], ends[1]] : [ends[1], ends[0]];
+        const mid = (lo.y + hi.y) / 2; lo.y = mid + 17; hi.y = mid - 17;
+      }
+      ends.forEach(e => {
+        o += `<text x="${X(end) + 8}" y="${e.y - 2}" style="font-weight:600;fill:${e.t.u ? '#fff' : '#c9d4cd'}">${esc(e.t.n)}</text>`;
+        o += `<text class="tick" x="${X(end) + 8}" y="${e.y + 14}">${e.v.toFixed(2)} xG</text>`;
+      });
+      return o;
+    });
+  }
+
+  /* Shot map: full pitch, one team attacking each way. Coordinates are FotMob's (x 0-105 towards the goal attacked, y 0-68).
+     d = {left: {n, u, shots: [{x, y, xg, goal, who, m}]}, right: {...}}  'right' attacks the right-hand goal. */
+  function shotmap(el, d) {
+    watch(el, (W, H) => {
+      const pw = 105, ph = 68, pad = 6;
+      const k = Math.min((W - 2 * pad) / pw, (H - 2 * pad) / ph);
+      const ox = (W - pw * k) / 2, oy = (H - ph * k) / 2;
+      const X = x => ox + x * k, Y = y => oy + y * k;
+      let o = `<rect x="${X(0)}" y="${Y(0)}" width="${pw * k}" height="${ph * k}" fill="rgba(93,107,99,.18)"/>`;
+      o += `<g fill="none" stroke="${LINE}" stroke-width="1.2" opacity=".7">`;
+      o += `<rect x="${X(0)}" y="${Y(0)}" width="${pw * k}" height="${ph * k}"/>`;
+      o += `<line x1="${X(pw / 2)}" x2="${X(pw / 2)}" y1="${Y(0)}" y2="${Y(ph)}"/><circle cx="${X(pw / 2)}" cy="${Y(ph / 2)}" r="${9.15 * k}"/>`;
+      [0, 1].forEach(side => {
+        const bx = side ? pw - 16.5 : 0, sx = side ? pw - 5.5 : 0;
+        o += `<rect x="${X(bx)}" y="${Y((ph - 40.3) / 2)}" width="${16.5 * k}" height="${40.3 * k}"/>`;
+        o += `<rect x="${X(sx)}" y="${Y((ph - 18.32) / 2)}" width="${5.5 * k}" height="${18.32 * k}"/>`;
+      });
+      o += `</g>`;
+      const R = xg => Math.max(3, Math.sqrt(xg) * k * 4.2);
+      ['left', 'right'].forEach(side => {
+        const t = d[side]; if (!t) return;
+        const col = t.u ? RED : '#c9d4cd';
+        const pts = t.shots.map(s => ({...s, px: side === 'right' ? X(s.x) : X(pw - s.x), py: side === 'right' ? Y(s.y) : Y(ph - s.y)}))
+          .sort((a, b) => a.goal - b.goal || b.xg - a.xg);
+        pts.forEach(s => {
+          const tip = `${s.who}, ${s.m}' (${s.xg.toFixed(2)} xG)${s.goal ? ', goal' : ''}`;
+          o += s.goal
+            ? `<circle cx="${s.px}" cy="${s.py}" r="${R(s.xg)}" fill="${col}" stroke="#0b0f0d" stroke-width="2"><title>${esc(tip)}</title></circle>`
+            : `<circle cx="${s.px}" cy="${s.py}" r="${R(s.xg)}" fill="${col}" fill-opacity=".12" stroke="${col}" stroke-opacity=".75" stroke-width="1.5"><title>${esc(tip)}</title></circle>`;
+        });
+        const lx = side === 'right' ? X(pw / 2) + 14 : X(pw / 2) - 14, anchor = side === 'right' ? 'start' : 'end';
+        o += `<text x="${lx}" y="${Y(0) + 22}" text-anchor="${anchor}" style="font-weight:600;fill:${t.u ? '#fff' : '#c9d4cd'}">${esc(t.n)} ${side === 'right' ? '→' : '←'}</text>`;
+        if (W > 460) o += `<text class="tick" x="${lx}" y="${Y(0) + 40}" text-anchor="${anchor}">${esc(t.sub || '')}</text>`;
+      });
+      return o;
+    });
+  }
+
+  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap};
 })();

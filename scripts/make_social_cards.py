@@ -1,6 +1,7 @@
 """Makes the 1200x630 social preview images in social/ by screenshotting each page's main chart.
-Needs Python with playwright (pip install playwright && playwright install chromium). Run locally, then upload social/."""
-import asyncio, html
+Needs Python with playwright (pip install playwright && playwright install chromium). Run locally, then upload social/.
+Pass card names to make only those, e.g. python scripts/make_social_cards.py kobbie-mainoo"""
+import asyncio, html, sys
 from playwright.async_api import async_playwright
 import pathlib
 R=str(pathlib.Path(__file__).resolve().parent.parent)+"/"
@@ -12,18 +13,19 @@ cards=[("home","index.html","#quality","Football, drawn with data.","One questio
 ("bruno-fernandes-decline","bruno-fernandes-decline.html","#bruno","Is Bruno Fernandes getting worse?","United at 11 games, part 5"),
 ("united-expected-points","united-expected-points.html","#xpts","So where should United actually be?","United at 11 games, part 6"),
 ("kobbie-mainoo","kobbie-mainoo.html","#both","Is Kobbie Mainoo the one thing going right?","Passing, dribbling, winning it back")]
-async def main():
+async def main(only=None):
+    todo=[c for c in cards if not only or c[0] in only]
     async with async_playwright() as p:
         b=await p.chromium.launch()
-        for slug,f,sel,title,kick in cards:
-            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts","#both") else 1180
+        for slug,f,sel,title,kick in todo:
+            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts","#both","#race") else 1180
             pg=await b.new_page(viewport={"width":w,"height":900})
             await pg.goto("file://"+R+f); await pg.wait_for_timeout(900)
             await pg.add_style_tag(content=".grow{animation:none!important}")
             el=await pg.query_selector(sel)
             await el.screenshot(path=f"/tmp/chart_{slug}.png")
         card=await b.new_page(viewport={"width":1200,"height":630})
-        for slug,f,sel,title,kick in cards:
+        for slug,f,sel,title,kick in todo:
             doc=f'''<html><head><link rel="stylesheet" href="file://{R}site.css"></head><body style="margin:0;width:1200px;height:630px;overflow:hidden;background:#0b0f0d">
 <div style="display:grid;grid-template-columns:470px 1fr;gap:36px;height:630px;box-sizing:border-box;padding:48px 52px;background:repeating-linear-gradient(90deg,#10291c 0 90px,#0d2318 90px 180px)">
 <div style="display:flex;flex-direction:column;justify-content:space-between">
@@ -37,4 +39,6 @@ async def main():
             await card.goto(f"file:///tmp/card_{slug}.html"); await card.wait_for_timeout(500)
             await card.screenshot(path=R+f"social/{slug}.png")
         await b.close()
-asyncio.run(main())
+if __name__ == "__main__":
+    # No arguments: remake every card. Or name the cards to make: python scripts/make_social_cards.py kobbie-mainoo
+    asyncio.run(main(sys.argv[1:] or None))

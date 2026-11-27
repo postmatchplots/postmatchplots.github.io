@@ -8,6 +8,7 @@ Each post should also carry these tags in its <head>:
   <meta property="article:published_time" content="2026-11-25">
   <meta name="pmp:series" content="Series name">   (optional)
   <meta name="pmp:part" content="1">                (optional, order within the series)
+  <meta name="pmp:series-order" content="newest">  (optional, list the series newest part first)
   <meta name="pmp:summary" content="One-line answer for the homepage list">
 """
 import html
@@ -39,6 +40,7 @@ def load_posts():
             "summary": meta(text, "pmp:summary") or meta(text, "og:description"),
             "series": meta(text, "pmp:series"),
             "part": int(meta(text, "pmp:part") or 0),
+            "newest_first": meta(text, "pmp:series-order") == "newest",
             "date": datetime.strptime(date[:10], "%Y-%m-%d").replace(hour=12, tzinfo=timezone.utc),
         })
     # Newest first; within a day, later parts first
@@ -87,7 +89,8 @@ def write_homepage(posts):
         groups.setdefault(p["series"] or "More posts", []).append(p)
     blocks = []
     for name, items in groups.items():
-        items = sorted(items, key=lambda p: p["part"]) if name != "More posts" else items
+        if name != "More posts":
+            items = sorted(items, key=lambda p: p["part"], reverse=any(p["newest_first"] for p in items))
         month = max(p["date"] for p in items).strftime("%B %Y")
         rows = "".join(
             f'\n    <li><a href="{p["file"]}"><span class="q">{e(p["title"])}</span>'
