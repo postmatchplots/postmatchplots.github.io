@@ -12,7 +12,7 @@ Each post should also carry these tags in its <head>:
   <meta name="pmp:summary" content="One-line answer for the homepage list">
 
 Guides (reference pages like "What is xG?") carry <meta name="pmp:kind" content="guide"> and
-<meta property="article:modified_time" content="2026-11-27">. They aren't posts: they stay out of the
+<meta property="article:modified_time" content="2026-11-27">, plus optional <meta name="pmp:part" content="1"> for their order. They aren't posts: they stay out of the
 feed and the post list, go in the sitemap, and are listed between <!-- guides:start --> and
 <!-- guides:end --> on the homepage.
 """
@@ -64,8 +64,9 @@ def load_guides():
             "title": meta(text, "og:title"),
             "summary": meta(text, "pmp:summary") or meta(text, "og:description"),
             "updated": (meta(text, "article:modified_time") or "")[:10],
+            "part": int(meta(text, "pmp:part") or 99),
         })
-    return sorted(guides, key=lambda g: g["title"])
+    return sorted(guides, key=lambda g: (g["part"], g["title"]))
 
 
 def write_feed(posts):
