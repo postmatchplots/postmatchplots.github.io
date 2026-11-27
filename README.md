@@ -57,7 +57,7 @@ An xG race, a shot map and a star performer pizza for United's latest league gam
 4. Run `python scripts/build_match_post.py match.json words.json`. It writes the page, adds and makes the share image, and prints checks (score, xG and shot counts against FotMob's own numbers). Fix anything it flags.
 5. Open the page to check it, then push. The posts group on the homepage as "Match in one chart", newest first.
 
-The star performer pizza picks United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, put their name in `STAR` at the top of `pull_match.js`. Each slice ranks his match numbers, per 90, against the season averages of PL players in his position with 450+ minutes.
+The star performer pizza picks United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. Each slice ranks his match numbers, per 90, against the season averages of PL players in his position with 450+ minutes.
 
 ## House rules
 
