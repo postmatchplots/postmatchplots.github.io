@@ -10,12 +10,13 @@ cards=[("home","index.html","#quality","Football, drawn with data.","One questio
 ("united-chances-conceded","united-chances-conceded.html","#forag","Why do United concede so many goals from so few shots?","United at 11 games, part 3"),
 ("united-set-pieces","united-set-pieces.html","#sp","How much are set pieces costing United?","United at 11 games, part 4"),
 ("bruno-fernandes-decline","bruno-fernandes-decline.html","#bruno","Is Bruno Fernandes getting worse?","United at 11 games, part 5"),
-("united-expected-points","united-expected-points.html","#xpts","So where should United actually be?","United at 11 games, part 6")]
+("united-expected-points","united-expected-points.html","#xpts","So where should United actually be?","United at 11 games, part 6"),
+("kobbie-mainoo","kobbie-mainoo.html","#both","Is Kobbie Mainoo the one thing going right?","Passing, dribbling, winning it back")]
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch()
         for slug,f,sel,title,kick in cards:
-            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts") else 1180
+            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts","#both") else 1180
             pg=await b.new_page(viewport={"width":w,"height":900})
             await pg.goto("file://"+R+f); await pg.wait_for_timeout(900)
             await pg.add_style_tag(content=".grow{animation:none!important}")

@@ -71,13 +71,13 @@ window.PMP = (() => {
       `<div class="row${r.u ? ' u' : ''}"><span>${esc(r.n)}</span><div><div class="bar grow" style="width:${Math.abs(r.v) / max * 100}%"></div></div><span class="v">${esc(d.f ? d.f(r.v) : r.v)}</span></div>`).join('');
   }
 
-  /* Diverging bars around zero, HTML: [{n,v,u}] */
+  /* Diverging bars around zero, HTML: [{n,v,u}]. Pass max to share a scale across charts, f to format values */
   function diverge(el, d) {
-    const max = Math.max(...d.rows.map(r => Math.abs(r.v)));
+    const max = d.max ?? Math.max(...d.rows.map(r => Math.abs(r.v)));
     el.innerHTML = d.rows.map(r => {
       const w = Math.abs(r.v) / max * 50;
       const bar = r.v === 0 ? '' : `<div class="bar" style="position:absolute;top:0;bottom:0;${r.v > 0 ? 'left:50%' : `right:50%;border-radius:3px 0 0 3px`};width:${w}%"></div>`;
-      return `<div class="row${r.u ? ' u' : ''}"><span>${esc(r.n)}</span><div class="zero" style="height:20px">${bar}<div style="position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid ${LINE}"></div></div><span class="v">${r.v > 0 ? '+' : ''}${r.v}</span></div>`;
+      return `<div class="row${r.u ? ' u' : ''}"><span>${esc(r.n)}</span><div class="zero" style="height:20px">${bar}<div style="position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid ${LINE}"></div></div><span class="v">${r.v > 0 ? '+' : ''}${d.f ? d.f(r.v) : r.v}</span></div>`;
     }).join('');
   }
 
