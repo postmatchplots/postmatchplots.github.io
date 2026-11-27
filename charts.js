@@ -261,5 +261,45 @@ window.PMP = (() => {
     el.innerHTML = o;
   }
 
-  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap, pizza, versus};
+
+  /* The usual "face-off" match stats bars, drawn on purpose for Chart crimes: each row splits 100% between the teams.
+     d = {teams: [a, b], rows: [{n, a, b, fa?, fb?}]} */
+  function faceoff(el, d) {
+    let o = `<div class="fo-head"><span>${esc(d.teams[0])}</span><span>${esc(d.teams[1])}</span></div>`;
+    d.rows.forEach(r => {
+      const t = r.a + r.b, pa = t ? r.a / t * 100 : 50;
+      o += `<div class="fo-row"><div class="fo-lab"><span>${esc(r.fa ?? r.a)}</span><span class="mute">${esc(r.n)}</span><span>${esc(r.fb ?? r.b)}</span></div>` +
+        `<div class="fo-bar"><i style="width:${pa}%;${pa >= 50 ? 'background:var(--red)' : ''}"></i><i style="width:${100 - pa}%;${pa < 50 ? 'background:#c9d4cd' : ''}"></i></div></div>`;
+    });
+    el.innerHTML = o;
+  }
+
+  /* Two teams against a normal game: each row is a track from 0 to max times the league average, the average marked.
+     d = {max, teams: [{n, u}], rows: [{n, avg, vals: [a, b], f?}]} */
+  function dots(el, d) {
+    const max = d.max || 3, pc = v => Math.min(v, max) / max * 100;
+    let o = '';
+    d.rows.forEach(r => {
+      const [a, b] = r.vals, f = r.f || (v => v);
+      o += `<div class="row dt"><span>${esc(r.n)}</span><div class="dt-track"><i class="dt-avg" style="left:${pc(1)}%"></i>` +
+        `<b class="dt-dot" style="left:${pc(b / r.avg)}%;background:#c9d4cd" title="${esc(d.teams[1].n)}: ${esc(f(b))}"></b>` +
+        `<b class="dt-dot" style="left:${pc(a / r.avg)}%;background:var(--red)" title="${esc(d.teams[0].n)}: ${esc(f(a))}"></b></div>` +
+        `<span class="v"><b style="color:#fff">${esc(f(a))}</b><span class="mute"> / ${esc(f(b))} / avg ${esc(f(r.avg))}</span></span></div>`;
+    });
+    o += `<div class="row dt axis"><span></span><div class="dt-track" style="background:none">${[0, 1, 2, 3].filter(t => t <= max).map(t => `<span style="left:${pc(t)}%">${t ? t + '×' : '0'}</span>`).join('')}</div><span></span></div>`;
+    el.innerHTML = o;
+  }
+
+  /* Stacked horizontal bars, one per team: d = {max, parts: [{n, col}], rows: [{n, u, vals: [..]}], f} */
+  function stack(el, d) {
+    const f = d.f || (v => v);
+    el.innerHTML = d.rows.map(r => {
+      const tot = r.vals.reduce((a, v) => a + v, 0);
+      return `<div class="row st${r.u ? ' u' : ''}"><span>${esc(r.n)}</span><div style="display:flex;height:26px">` +
+        r.vals.map((v, i) => v ? `<div class="grow" title="${esc(d.parts[i].n)}: ${esc(f(v))}" style="width:${v / d.max * 100}%;background:${d.parts[i].col};border-right:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px;color:#0b0f0d;font-weight:600">${v / d.max > 0.07 ? esc(f(v)) : ''}</div>` : '').join('') +
+        `</div><span class="v">${esc(f(tot))}</span></div>`;
+    }).join('');
+  }
+
+  return {pitch, scatter, rows, diverge, slope, dumbbell, xgrace, shotmap, pizza, versus, faceoff, dots, stack};
 })();

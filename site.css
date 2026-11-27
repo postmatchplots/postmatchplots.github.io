@@ -107,3 +107,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .vs-head{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:12px 0 0}
 .vs-head:first-child{margin-top:0}
 @media(max-width:600px){.row.vs{grid-template-columns:6.8em minmax(0,1fr) 6.4em}}
+.fo-head{display:flex;justify-content:space-between;font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:20px;margin-bottom:6px}
+.fo-row{margin:0 0 10px}
+.fo-lab{display:flex;justify-content:space-between;font-size:15px;font-variant-numeric:tabular-nums}
+.fo-bar{display:flex;gap:3px;height:8px;margin-top:3px}.fo-bar i{display:block;background:var(--grey2);border-radius:2px}
+.row.dt{grid-template-columns:8.5em minmax(0,1fr) 11em;padding:5px 0}
+.dt-track{position:relative;height:2px;background:var(--grey2);margin:0 8px}
+.dt-avg{position:absolute;top:-9px;bottom:-9px;border-left:2px dashed var(--mute)}
+.dt-dot{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--bg)}
+.row.dt.axis{font-size:13px;color:var(--mute)}.row.dt.axis .dt-track span{position:absolute;transform:translateX(-50%)}
+.row.st{grid-template-columns:8.5em minmax(0,1fr) 3.2em}
+@media(max-width:600px){.row.dt{grid-template-columns:6.4em minmax(0,1fr) 7.4em;font-size:13px}}
