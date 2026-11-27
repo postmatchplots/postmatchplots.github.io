@@ -6,7 +6,14 @@
   <atom:link href="https://postmatchplots.github.io/feed.xml" rel="self" type="application/rss+xml"/>
   <description>Football, drawn with data. One question at a time, answered with charts.</description>
   <language>en-gb</language>
-  <lastBuildDate>Wed, 25 Nov 2026 12:00:00 +0000</lastBuildDate>
+  <lastBuildDate>Mon, 30 Nov 2026 12:00:00 +0000</lastBuildDate>
+  <item>
+    <title>Is Kobbie Mainoo the one thing going right?</title>
+    <link>https://postmatchplots.github.io/kobbie-mainoo.html</link>
+    <guid isPermaLink="true">https://postmatchplots.github.io/kobbie-mainoo.html</guid>
+    <pubDate>Mon, 30 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Kobbie Mainoo is the most accurate passer and best dribbler among the Premier League&#x27;s central midfielders, and United play better with him. The one gap: he barely shoots or creates.</description>
+  </item>
   <item>
     <title>So where should United actually be?</title>
     <link>https://postmatchplots.github.io/united-expected-points.html</link>

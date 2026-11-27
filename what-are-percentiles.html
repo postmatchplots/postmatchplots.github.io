@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What are percentiles? | Post-Match Plots</title>
+<meta name="description" content="A percentile tells you what share of similar players someone is ahead of. How this site works them out, who players are compared with, and the catch: they hide how big the gaps are.">
+<link rel="canonical" href="https://postmatchplots.github.io/what-are-percentiles.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Post-Match Plots" href="feed.xml">
+<meta property="og:type" content="article">
+<meta name="pmp:kind" content="guide">
+<meta property="article:modified_time" content="2026-11-27">
+<meta name="pmp:summary" content="How a player ranks against others in his position, and what the number hides.">
+<meta property="og:site_name" content="Post-Match Plots">
+<meta property="og:title" content="What are percentiles?">
+<meta property="og:description" content="A percentile tells you what share of similar players someone is ahead of. How this site works them out, who players are compared with, and the catch: they hide how big the gaps are.">
+<meta property="og:url" content="https://postmatchplots.github.io/what-are-percentiles.html">
+<meta property="og:image" content="https://postmatchplots.github.io/social/what-are-percentiles.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What are percentiles?">
+<meta name="twitter:description" content="A percentile tells you what share of similar players someone is ahead of. How this site works them out, who players are compared with, and the catch: they hide how big the gaps are.">
+<meta name="twitter:image" content="https://postmatchplots.github.io/social/what-are-percentiles.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What are percentiles?", "description": "A percentile tells you what share of similar players someone is ahead of. How this site works them out, who players are compared with, and the catch: they hide how big the gaps are.", "dateModified": "2026-11-27", "image": "https://postmatchplots.github.io/social/what-are-percentiles.png", "mainEntityOfPage": "https://postmatchplots.github.io/what-are-percentiles.html", "author": {"@type": "Organization", "name": "Post-Match Plots", "url": "https://postmatchplots.github.io/"}, "publisher": {"@type": "Organization", "name": "Post-Match Plots", "logo": {"@type": "ImageObject", "url": "https://postmatchplots.github.io/logo.svg"}}}</script>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><img src="logo.svg" alt="" width="40" height="40">Post-Match Plots</a>
+  <nav><a href="index.html#posts">Posts</a><a href="index.html#guides">Guides</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
+</div></header>
+
+<main>
+<section class="band pitchband"><div class="wrap">
+  <p class="small" style="color:#c9d4cd;margin-bottom:10px">Guide &nbsp;/&nbsp; How the numbers work</p>
+  <h1 style="max-width:900px">What are percentiles?</h1>
+  <p class="stand">A percentile tells you what share of similar players someone is ahead of. 90th percentile means he's better at that thing than 90% of players in his position; 50th is bang average. It's a quick way to read a player's strengths and weaknesses side by side, but it hides how big the gaps actually are.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="figs"><div class="fg"><div class="num">47</div><div class="lab">PL central midfielders in the comparison group</div></div><div class="fg"><div class="num">9.2</div><div class="lab">Kobbie Mainoo's ball recoveries per 90</div></div><div class="fg"><div class="num red">97th</div><div class="lab">percentile: only one of the 47 does it more</div></div></div>
+</div></section>
+
+<article class="band" style="padding-top:8px"><div class="wrap">
+<div class="sec read">
+  <h2>Line everyone up, see where he stands</h2>
+  <p>Take one stat, say ball recoveries, and line up every comparable player from lowest to highest. A player's percentile is how far along that line he is. Of the 47 Premier League central midfielders compared here, 45 win the ball back less often than Mainoo and one (Ipswich's Exequiel Palacios) does it more.</p>
+  <p>The sum, for anyone who wants it: the players below him, plus half of those level with him (himself included), divided by the size of the group. That's (45 + 0.5) ÷ 47 = 97%, so 97th percentile. Players on exactly the same number share a percentile.</p>
+</div>
+<div class="chart">
+  <div class="fig" id="pct"><svg role="img" aria-label="Scatter of ball recoveries per 90 against percentile for 47 Premier League central midfielders. The dots form a steep S-shape: between 3.6 and 4.6 recoveries the percentile climbs from 28 to 49, but from 7.0 to 9.5 it only goes from 91 to 99. Mainoo is at 9.2 and the 97th percentile."></svg></div>
+  <p class="cap">Ball recoveries per 90 and percentile for the 47 PL central midfielders with 450+ minutes, 2026/27 to 24 November. Hover a dot for the player.</p>
+</div>
+
+<div class="sec read">
+  <h2>The catch: percentiles squash the gaps</h2>
+  <p>Look at the shape of that chart. In the crowded middle, a tiny difference moves you a long way: going from 3.6 recoveries a game to 4.6 takes you from the 28th percentile to the 49th. At the top, where players are spread out, big differences barely register. Ryan Christie recovers 8.4 a game and James McAtee 7.0, a much bigger gap, and it's worth just four percentiles (95th v 91st).</p>
+  <p class="callout">A percentile tells you the order. It doesn't tell you the distance.</p>
+  <p>That's why posts here show the raw numbers next to the percentiles, and why a chart like the one above is sometimes better than a percentile bar on its own.</p>
+</div>
+
+<div class="sec read">
+  <h2>Who he's compared with</h2>
+  <p>A percentile is only as good as the group behind it. On this site that group is always:</p>
+  <p><strong>Same position.</strong> A centre-back in the 10th percentile for shots isn't a problem. Players are grouped as goalkeepers, centre-backs, full-backs, central midfielders, attacking midfielders and wingers, and strikers, using FotMob's positions.</p>
+  <p><strong>Same league, same season.</strong> Premier League only, this season only.</p>
+  <p><strong>450 minutes or more.</strong> That's five full games. Below that, a player who's had one great half an hour can top every chart.</p>
+  <p><strong>Per 90 minutes.</strong> Everything is scaled to a full match, so a player who's played 600 minutes can be compared fairly with one who's played 1,000. It also means a sub who comes on for 20 minutes against tired legs can look better than he is, which the 450-minute rule helps with.</p>
+</div>
+
+<div class="sec read">
+  <h2>Reading them well</h2>
+  <p><strong>Look at the whole profile.</strong> One percentile on its own says little. A midfielder who's 99th for pass accuracy and 18th for big chances created is a safe, tidy passer, not a creator, and both numbers matter.</p>
+  <p><strong>Low isn't always bad.</strong> Some stats depend on the job a player's asked to do. A holding midfielder who rarely shoots might be doing exactly what his manager wants.</p>
+  <p><strong>Early season, small groups.</strong> With a dozen games played, a player can jump 20 percentiles after one good afternoon. Posts say how many games they cover for that reason.</p>
+  <p><strong>Not every site does it the same way.</strong> Other sites use different groups, minimum minutes and methods, so the same player can be 85th on one and 78th on another. Neither is wrong.</p>
+</div>
+
+<div class="sec read">
+  <h2>Where you'll see them here</h2>
+  <p><a href="kobbie-mainoo.html">Is Kobbie Mainoo the one thing going right?</a> is built around his percentiles, and <a href="bruno-fernandes-decline.html">Is Bruno Fernandes getting worse?</a> compares his percentiles across two seasons.</p>
+  <p class="small">Numbers on this page: FotMob (Opta), Premier League 2026/27 up to 24 November 2026.</p>
+</div>
+</div></article>
+
+<section class="band" style="background:var(--panel)"><div class="wrap">
+  <h2>More guides</h2>
+  <div class="series"><a class="card" href="what-is-xg.html"><div class="meta">Guide</div><h3 style="font-size:19px;margin:0">What is xG?</h3></a></div>
+</div></section>
+</main>
+
+<footer class="band"><div class="wrap">
+  <span>Post-Match Plots. Football, drawn with data.</span>
+  <span>Data: FotMob / Opta</span>
+</div></footer>
+
+<script src="charts.js"></script>
+<script>
+{
+  const C = [["Jordan Henderson",3.1],["Pascal Groß",2.7],["Granit Xhaka",6.2],["Matt Crooks",2],["Ryan Christie",8.4],["Youri Tielemans",5.7],["Matt Grimes",2.6],["Martin Ødegaard",3],["Sander Berge",4.1],["Saša Lukić",3.7],["Alex Iwobi",4.6],["Xaver Schlager",5.9],["Daichi Kamada",4.7],["Declan Rice",4.4],["Vitaly Janelt",3.9],["Exequiel Palacios",9.5],["Tyler Adams",6.3],["Ethan Ampadu",5.5],["Regan Slater",2.9],["Boubacar Kamara",4.1],["Alexis Mac Allister",5.9],["Dominik Szoboszlai",6.1],["Bruno Guimarães",5.3],["Sandro Tonali",4.6],["Anton Stach",3.6],["Ao Tanaka",4.5],["James Garner",6.1],["Quinten Timber",5.3],["Elliot Anderson",6.2],["James McAtee",7],["Moisés Caicedo",3.3],["Yasin Ayari",3.1],["Mamadou Sangaré",6.6],["Roméo Lavia",7],["Alex Scott",6.9],["Elliot Stroud",6],["Nico González",5.6],["Shea Charles",5.7],["Kobbie Mainoo",9.2],["Adam Wharton",3],["Archie Gray",3.6],["Mateus Fernandes",6.2],["Noah Sadiki",3.6],["Myles Lewis-Skelly",3],["Johan Manzambi",3.6],["Harrison Armstrong",4.2],["Chema Andrés",3.2]];
+  const N = C.length;
+  const pct = v => Math.round((C.filter(c => c[1] < v).length + 0.5 * C.filter(c => c[1] === v).length) / N * 100);
+  PMP.scatter(document.getElementById('pct'), {
+    pts: C.map(c => ({n: c[0] === 'Kobbie Mainoo' ? 'Mainoo' : c[0], x: c[1], y: pct(c[1]), u: c[0] === 'Kobbie Mainoo', tip: `${c[1]} recoveries per 90, ${pct(c[1])}th percentile`})),
+    xr: [1.5, 10.5], yr: [-3, 106], xt: [2, 3, 4, 5, 6, 7, 8, 9, 10], yt: [0, 25, 50, 75, 100],
+    xl: 'Ball recoveries per 90', yl: 'Percentile',
+    avg: 50, avgLabel: '50th: the middle', label: ['James McAtee', 'Ryan Christie']
+  });
+}
+</script>
+</body>
+</html>

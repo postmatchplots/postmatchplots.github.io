@@ -72,7 +72,7 @@ def page(fname, title, kicker, h1, stand, figs, body, script, desc):
 <body>
 <header class="top"><div class="wrap">
   {LOGO}
-  <nav><a href="index.html#posts">Posts</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
+  <nav><a href="index.html#posts">Posts</a><a href="index.html#guides">Guides</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
 </div></header>
 
 <main>

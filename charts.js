@@ -51,6 +51,7 @@ window.PMP = (() => {
       let o = '';
       d.yt.forEach(t => { o += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${RULE}"/><text class="tick" x="${m.l - 8}" y="${Y(t) + 4}" text-anchor="end">${esc(d.yf ? d.yf(t) : t)}</text>`; });
       d.xt.filter((t, i) => !small || i % 2 === 0).forEach(t => { o += `<text class="tick" x="${X(t)}" y="${H - m.b + 20}" text-anchor="middle">${esc(d.xf ? d.xf(t) : t)}</text>`; });
+      if (d.diag) { const a = Math.max(x0, y0), b = Math.min(x1, y1); o += `<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}" stroke="${LINE}" stroke-dasharray="4 4"/><text class="tick" x="${X(b) - 6}" y="${Y(b) + 16}" text-anchor="end">${esc(d.diag)}</text>`; }
       if (d.avg) o += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(d.avg)}" y2="${Y(d.avg)}" stroke="${LINE}" stroke-dasharray="4 4"/><text class="tick" x="${W - m.r}" y="${Y(d.avg) - 7}" text-anchor="end">${esc(d.avgLabel)}</text>`;
       o += `<text class="tick" x="${(m.l + W - m.r) / 2}" y="${H - 8}" text-anchor="middle">${esc(d.xl)}</text>`;
       o += `<text class="tick" x="14" y="${(m.t + H - m.b) / 2}" text-anchor="middle" transform="rotate(-90 14 ${(m.t + H - m.b) / 2})">${esc(d.yl)}</text>`;

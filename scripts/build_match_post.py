@@ -209,7 +209,7 @@ def build(match, words):
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="index.html"><img src="logo.svg" alt="" width="40" height="40">Post-Match Plots</a>
-  <nav><a href="index.html#posts">Posts</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
+  <nav><a href="index.html#posts">Posts</a><a href="index.html#guides">Guides</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
 </div></header>
 
 <main>

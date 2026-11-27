@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is xG? | Post-Match Plots</title>
+<meta name="description" content="Expected goals (xG) is the chance a shot is scored, based on how often shots like it have gone in before. What it measures, what it doesn't, and how this site uses it.">
+<link rel="canonical" href="https://postmatchplots.github.io/what-is-xg.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Post-Match Plots" href="feed.xml">
+<meta property="og:type" content="article">
+<meta name="pmp:kind" content="guide">
+<meta property="article:modified_time" content="2026-11-27">
+<meta name="pmp:summary" content="The chance a shot goes in, and why it's the best simple guide to who's playing well.">
+<meta property="og:site_name" content="Post-Match Plots">
+<meta property="og:title" content="What is xG?">
+<meta property="og:description" content="Expected goals (xG) is the chance a shot is scored, based on how often shots like it have gone in before. What it measures, what it doesn't, and how this site uses it.">
+<meta property="og:url" content="https://postmatchplots.github.io/what-is-xg.html">
+<meta property="og:image" content="https://postmatchplots.github.io/social/what-is-xg.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is xG?">
+<meta name="twitter:description" content="Expected goals (xG) is the chance a shot is scored, based on how often shots like it have gone in before. What it measures, what it doesn't, and how this site uses it.">
+<meta name="twitter:image" content="https://postmatchplots.github.io/social/what-is-xg.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What is xG?", "description": "Expected goals (xG) is the chance a shot is scored, based on how often shots like it have gone in before. What it measures, what it doesn't, and how this site uses it.", "dateModified": "2026-11-27", "image": "https://postmatchplots.github.io/social/what-is-xg.png", "mainEntityOfPage": "https://postmatchplots.github.io/what-is-xg.html", "author": {"@type": "Organization", "name": "Post-Match Plots", "url": "https://postmatchplots.github.io/"}, "publisher": {"@type": "Organization", "name": "Post-Match Plots", "logo": {"@type": "ImageObject", "url": "https://postmatchplots.github.io/logo.svg"}}}</script>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><img src="logo.svg" alt="" width="40" height="40">Post-Match Plots</a>
+  <nav><a href="index.html#posts">Posts</a><a href="index.html#guides">Guides</a><a href="index.html#about">About</a><a href="feed.xml">RSS</a></nav>
+</div></header>
+
+<main>
+<section class="band pitchband"><div class="wrap">
+  <p class="small" style="color:#c9d4cd;margin-bottom:10px">Guide &nbsp;/&nbsp; How the numbers work</p>
+  <h1 style="max-width:900px">What is xG?</h1>
+  <p class="stand">Expected goals, or xG, is the chance that a shot goes in. A shot with 0.3 xG is the kind that gets scored about three times in ten. Add up every shot a team takes and you get how many goals their chances were worth, which tells you more about how they played than the score does.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="figs"><div class="fg"><div class="num">0.79</div><div class="lab">xG for a penalty</div></div><div class="fg"><div class="num">0.10</div><div class="lab">xG for the average Premier League shot, penalties aside</div></div><div class="fg"><div class="num red">0.035</div><div class="lab">for United's average shot from outside the box</div></div></div>
+</div></section>
+
+<article class="band" style="padding-top:8px"><div class="wrap">
+<div class="sec read">
+  <h2>A shot's worth, in one number</h2>
+  <p>Every shot gets compared with hundreds of thousands of similar shots from the past. If shots from that spot, in that situation, went in 12% of the time, the shot is worth 0.12 xG. It's always somewhere between 0 (no chance) and 1 (can't miss).</p>
+  <p>The model behind the numbers on this site is Opta's. It looks at where the shot was taken from, the angle to goal, whether it was a header or a kick, what kind of pass set it up, and whether it came from open play, a set piece or a counter. Penalties are simple: they all get 0.79, because that's roughly how often they're scored.</p>
+</div>
+<div class="chart">
+  <h3>What different shots are worth</h3>
+  <div class="rows" id="worth" role="img" aria-label="Average xG per shot. A penalty 0.79. The average Premier League shot, penalties aside, 0.10. United's average shot 0.084. United's average shot from outside the box 0.035."></div>
+  <p class="cap">Average xG per shot, Premier League 2026/27 to 24 November. Non-penalty shots except the top row.</p>
+</div>
+
+<div class="sec read">
+  <h2>Why it beats counting shots</h2>
+  <p>A tap-in from two yards and a hopeful one from 35 yards both count as one shot. They are not the same thing. United have taken more shots than anyone this season, but nearly half came from outside the box, where each one is worth about a third of a normal chance. Their 203 shots add up to 18.2 xG; Man City's 165 add up to 21.9.</p>
+  <p>So xG is a better guide to goals than shots are. Put each team's xG next to the goals they've actually scored and most sit near the line where the two are equal.</p>
+</div>
+<div class="chart">
+  <div class="fig" id="gxg"><svg role="img" aria-label="Scatter of expected goals against actual goals for all 20 Premier League teams after 11 games. Most teams sit near the line where goals equal xG. Chelsea are well above it with 20 goals from 14.6 xG; Forest are well below with 9 goals from 17.7 xG; United have 14 goals from 18.2 xG."></svg></div>
+  <p class="cap">All 20 PL teams, 2026/27 to 24 November. Above the dashed line: scoring more than the chances were worth. Below it: fewer. Hover a dot for the team.</p>
+</div>
+
+<div class="sec read">
+  <h2>What the gap between goals and xG means</h2>
+  <p>Some teams finish above or below their xG. After 11 games that's mostly noise: shots go in or they don't, and a few lucky deflections can add up. Chelsea have scored 20 from chances worth 14.6; Forest 9 from 17.7. Neither is likely to keep that up for a whole season. Over a long stretch most teams drift back towards their xG, which is why it's handy for spotting who's been lucky and who's been hard done by.</p>
+  <p>A team or player who beats their xG season after season might genuinely be better at finishing. That's hard to prove from a few months of shots, so on this site a gap is treated as "probably luck" unless there's more evidence.</p>
+</div>
+
+<div class="sec read">
+  <h2>What xG doesn't tell you</h2>
+  <p><strong>It's about the chance, not the finish.</strong> xG is worked out from the moment the shot is taken. A shot that hits the top corner and one that's scuffed wide from the same spot get the same xG. (FotMob also shows "xGOT", xG on target, which does take account of where the shot went. This site doesn't use it.)</p>
+  <p><strong>No shot, no xG.</strong> A cross that flashes across the six-yard box with nobody there to touch it creates nothing in xG, however close it came.</p>
+  <p><strong>Small samples swing.</strong> One match's xG can be dominated by a single penalty. Over a few games it settles down; over a season it's much steadier.</p>
+  <p><strong>It isn't the score.</strong> Losing 1-0 while "winning" 2.1 to 0.6 on xG means you played better, not that you deserved the points by right. Football is allowed to be unfair.</p>
+</div>
+
+<div class="sec read">
+  <h2>The family of x-stats</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Stat</th><th style="text-align:left">What it means</th></tr></thead>
+    <tbody>
+      <tr><td>xG</td><td style="text-align:left">How many goals a team's or player's shots were worth.</td></tr>
+      <tr><td>npxG</td><td style="text-align:left">Non-penalty xG: the same, with penalties taken out. Useful because who takes the penalties is a squad decision, not a sign of how well someone plays.</td></tr>
+      <tr><td>xGA</td><td style="text-align:left">xG against: how many goals the chances a team gave away were worth.</td></tr>
+      <tr><td>xA</td><td style="text-align:left">Expected assists: the xG of the shots a player sets up with his pass, whether or not they go in. Rewards the pass, not the finish.</td></tr>
+      <tr><td>Big chance</td><td style="text-align:left">Opta's label for a chance a player would reasonably be expected to score, usually one-on-one or from very close in.</td></tr>
+      <tr><td>Expected points</td><td style="text-align:left">Treats every shot in a match as a roll of the dice to work out each side's chance of winning, then turns that into points. <a href="united-expected-points.html">Worked through here</a>.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="sec read">
+  <h2>Where you'll see it here</h2>
+  <p>Most posts use xG somewhere. It's at the centre of <a href="united-shot-quality.html">why United's shots don't add up to more</a>, <a href="united-finishing-luck.html">whether United are unlucky in front of goal</a> and <a href="united-chances-conceded.html">why they concede so much from so little</a>. Every Monday's Match in one chart plots it shot by shot.</p>
+  <p class="small">Numbers on this page: FotMob (Opta), Premier League 2026/27 up to 24 November 2026.</p>
+</div>
+</div></article>
+
+<section class="band" style="background:var(--panel)"><div class="wrap">
+  <h2>More guides</h2>
+  <div class="series"><a class="card" href="what-are-percentiles.html"><div class="meta">Guide</div><h3 style="font-size:19px;margin:0">What are percentiles?</h3></a></div>
+</div></section>
+</main>
+
+<footer class="band"><div class="wrap">
+  <span>Post-Match Plots. Football, drawn with data.</span>
+  <span>Data: FotMob / Opta</span>
+</div></footer>
+
+<script src="charts.js"></script>
+<script>
+{
+  PMP.rows(document.getElementById('worth'), {max: 0.8, f: v => v < 0.1 ? v.toFixed(3) : v.toFixed(2), rows: [
+    {n: 'A penalty', v: 0.79},
+    {n: 'Average PL shot', v: 0.105},
+    {n: 'United shot', v: 0.084, u: true},
+    {n: 'United long shot', v: 0.035, u: true}
+  ]});
+
+  const T = [["Man City",21.9,22],["Brighton",21.6,26],["Bournemouth",20.9,18],["Brentford",17.2,20],["Liverpool",20.2,18],["Man Utd",18.2,14],["Arsenal",17.6,17],["Leeds",16.0,14],["Nott'm Forest",17.7,9],["Tottenham",15.1,12],["Sunderland",15.8,8],["Everton",14.1,12],["Chelsea",14.6,20],["Crystal Palace",15.5,12],["Fulham",15.2,11],["Aston Villa",14.8,14],["Newcastle",13.2,15],["Ipswich",14.0,15],["Coventry",11.6,13],["Hull",11.3,13]];
+  PMP.scatter(document.getElementById('gxg'), {
+    pts: T.map(t => ({n: t[0], x: t[1], y: t[2], u: t[0] === 'Man Utd', tip: `${t[2]} goals from ${t[1]} xG`})),
+    xr: [7, 27.5], yr: [7, 27.5], xt: [8, 12, 16, 20, 24], yt: [8, 12, 16, 20, 24],
+    xl: 'Expected goals (xG)', yl: 'Goals scored',
+    diag: 'Goals = xG', label: ['Chelsea', "Nott'm Forest", 'Brighton', 'Sunderland']
+  });
+}
+</script>
+</body>
+</html>

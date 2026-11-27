@@ -12,13 +12,15 @@ cards=[("home","index.html","#quality","Football, drawn with data.","One questio
 ("united-set-pieces","united-set-pieces.html","#sp","How much are set pieces costing United?","United at 11 games, part 4"),
 ("bruno-fernandes-decline","bruno-fernandes-decline.html","#bruno","Is Bruno Fernandes getting worse?","United at 11 games, part 5"),
 ("united-expected-points","united-expected-points.html","#xpts","So where should United actually be?","United at 11 games, part 6"),
-("kobbie-mainoo","kobbie-mainoo.html","#both","Is Kobbie Mainoo the one thing going right?","Passing, dribbling, winning it back")]
+("kobbie-mainoo","kobbie-mainoo.html","#both","Is Kobbie Mainoo the one thing going right?","Passing, dribbling, winning it back"),
+("what-is-xg","what-is-xg.html","#gxg","What is xG?","Guide: how the numbers work"),
+("what-are-percentiles","what-are-percentiles.html","#pct","What are percentiles?","Guide: how the numbers work")]
 async def main(only=None):
     todo=[c for c in cards if not only or c[0] in only]
     async with async_playwright() as p:
         b=await p.chromium.launch()
         for slug,f,sel,title,kick in todo:
-            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts","#both","#race") else 1180
+            w = 680 if sel in ("#bruno","#gxg","#quality","#forag","#xpts","#both","#race","#pct") else 1180
             pg=await b.new_page(viewport={"width":w,"height":900})
             await pg.goto("file://"+R+f); await pg.wait_for_timeout(900)
             await pg.add_style_tag(content=".grow{animation:none!important}")
