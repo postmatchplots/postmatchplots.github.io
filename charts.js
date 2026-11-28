@@ -58,8 +58,9 @@ window.PMP = (() => {
       const pts = d.pts.slice().sort((a, b) => a.u - b.u);
       pts.forEach(p => { o += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${p.u ? 8 : 5.5}" fill="${p.u ? RED : GREY}" stroke="#0b0f0d" stroke-width="2"><title>${esc(p.n)}: ${esc(p.tip || '')}</title></circle>`; });
       pts.filter(p => p.u || (d.label || []).includes(p.n)).forEach(p => {
-        const left = X(p.x) > W - 130;
-        o += `<text x="${X(p.x) + (left ? -12 : 12)}" y="${Y(p.y) + 5}" text-anchor="${left ? 'end' : 'start'}" style="${p.u ? 'font-weight:600' : 'fill:#c9d1cc'}">${esc(p.n)}</text>`;
+        const left = X(p.x) > W - 130, up = (d.above || []).includes(p.n);   // d.above: names to label above their dot
+        const lx = up ? X(p.x) + (left ? 6 : -6) : X(p.x) + (left ? -12 : 12), ly = up ? Y(p.y) - 12 : Y(p.y) + 5;
+        o += `<text x="${lx}" y="${ly}" text-anchor="${left ? 'end' : 'start'}" style="${p.u ? 'font-weight:600' : 'fill:#c9d1cc'}">${esc(p.n)}</text>`;
       });
       return o;
     });

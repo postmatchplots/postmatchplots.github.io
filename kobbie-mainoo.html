@@ -57,7 +57,7 @@
 </div>
 
 <div class="sec read">
-  <h2>Nobody else does both</h2>
+  <h2>Almost nobody else does both</h2>
   <p>Plenty of midfielders are good at keeping the ball, and plenty are good at winning it. Put the two side by side and he's almost on his own in the top corner. Only Palacios completes more passes <em>and</em> recovers the ball more often. Declan Rice, Elliot Anderson and Mateus Fernandes pass more; none of them win it back as much.</p>
 </div>
 <div class="chart">
@@ -117,7 +117,7 @@
     pts: C.map(c => ({n: c[0] === 'Kobbie Mainoo' ? 'Mainoo' : c[0], x: c[1], y: c[2], u: c[0] === 'Kobbie Mainoo', tip: `${c[1]} passes, ${c[2]} recoveries per 90`})),
     xr: [10, 82], yr: [1.5, 10.2], xt: [10, 20, 30, 40, 50, 60, 70, 80], yt: [2, 4, 6, 8, 10],
     xl: 'Completed passes per 90', yl: 'Ball recoveries per 90',
-    avg, avgLabel: 'Average ' + avg.toFixed(1), label: ['Exequiel Palacios', 'Elliot Anderson', 'Declan Rice', 'Youri Tielemans']
+    avg, avgLabel: 'Average ' + avg.toFixed(1), label: ['Exequiel Palacios', 'Elliot Anderson', 'Declan Rice', 'Youri Tielemans'], above: ['Exequiel Palacios', 'Elliot Anderson']
   });
 
   PMP.diverge(document.getElementById('even'), {max: 0.5, f: v => v.toFixed(2), rows: [{n: 'With Mainoo', v: 0.48, u: true}, {n: 'Without', v: -0.37}]});
