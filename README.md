@@ -59,6 +59,10 @@ An xG race, a shot map and a star performer for United's latest league game, bui
 
 The star performer is United's highest-rated outfielder by FotMob match rating (60+ minutes). To choose someone else, set `STAR` in `pull_match.js` to their name. His numbers from the match sit beside his own Premier League average per 90 this season, scaled to his minutes if he came off early. If he's played under 270 league minutes, the average for PL players in his position (450+ minutes) is used instead and the caption says so.
 
+## Instagram carousels
+
+`python scripts/make_carousel.py <post>.html` turns a post into 1080x1350 slides in `carousel/<post>/`, plus `caption.txt` to paste in. Everything comes from the post itself: the question, the short answer, the big numbers, one slide per section (the chart if it has one), then "Full post: link in bio". Needs playwright, same as make_social_cards.py. The `carousel/` folder is gitignored, so slides never end up on the site.
+
 ## House rules
 
 - Everything here, history included, is public. Deleting a file later doesn't remove it from history.
